@@ -1,0 +1,17 @@
+{
+    "config": {
+        "echo-server-addr" : {
+            "help" : "IP address of echo server",
+            "value" : "\"echo.mbedcloudtesting.com\""
+        },
+        "echo-server-port" : {
+            "help" : "Port of echo server",
+            "value" : "7"
+        }
+    },
+    "target_overrides": {
+        "*": {
+            "target.network-default-interface-type": "ETHERNET"
+        }
+    }
+}
