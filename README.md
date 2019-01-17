@@ -7,7 +7,7 @@
 
 # Current Progress #
 
-1. Completed support for the latest mbed-os build environment.
+1. 2019-01-17: Completed support for the latest mbed-os build environment.
 
 # Development support #
 
