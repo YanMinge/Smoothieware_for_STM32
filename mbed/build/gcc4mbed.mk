@@ -271,7 +271,7 @@ MBED_SRC_ROOT    ?= $(GCC4MBED_DIR)/mbed-os
 MBED_DEBUG_DIR   := $(PROJECT_ROOT)/Debug/$(MBED_LIB_NAME)
 MBED_DEVELOP_DIR := $(PROJECT_ROOT)/Develop/$(MBED_LIB_NAME)
 MBED_RELEASE_DIR := $(PROJECT_ROOT)/Release/$(MBED_LIB_NAME)
-MBED_DROP_DIR := $(GCC4MBED_DIR)/Drop
+# MBED_DROP_DIR := $(GCC4MBED_DIR)/Drop
 
 
 # Toolchain sub-directories to be built with GCC.
@@ -542,8 +542,8 @@ clean: $(addsuffix -clean,$(DEVICES))
 clean-libs:
 	$(foreach i,$(patsubst !%,%,$(USER_LIBS)),$(call clean_user_lib,$i))
 clean-mbed:
-	@echo Cleaning $(GCC4MBED_DIR)/Drop
-	$(Q) $(REMOVE_DIR) $(call convert-slash,$(GCC4MBED_DIR)/Drop) $(QUIET)
+	# @echo Cleaning $(GCC4MBED_DIR)/Drop
+	# $(Q) $(REMOVE_DIR) $(call convert-slash,$(GCC4MBED_DIR)/Drop) $(QUIET)
 	@echo Cleaning $(GCC4MBED_DIR)/Debug
 	$(Q) $(REMOVE_DIR) $(call convert-slash,$(GCC4MBED_DIR)/Debug) $(QUIET)
 	@echo Cleaning $(GCC4MBED_DIR)/Develop

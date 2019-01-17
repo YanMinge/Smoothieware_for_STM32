@@ -176,9 +176,9 @@ ifeq "$(NEWLIB_NANO)" "1"
 $(MBED_DEVICE): LD_FLAGS  += -specs=nano.specs
 endif
 
-.PHONY: $(MBED_DEVICE) $(MBED_DEVICE)-clean $(MBED_DEVICE)-deploy $(MBED_DEVICE)-size drop_copy
+.PHONY: $(MBED_DEVICE) $(MBED_DEVICE)-clean $(MBED_DEVICE)-deploy $(MBED_DEVICE)-size # drop_copy
 
-$(MBED_DEVICE): $(TARGET_BIN) $(OUTDIR)/$(PROJECT).hex $(OUTDIR)/$(PROJECT).disasm $(MBED_DEVICE)-size drop_copy
+$(MBED_DEVICE): $(TARGET_BIN) $(OUTDIR)/$(PROJECT).hex $(OUTDIR)/$(PROJECT).disasm $(MBED_DEVICE)-size # drop_copy
 
 # mbed library locations depend on build type.
 ifeq "$(GCC4MBED_TYPE)" "Debug"
@@ -197,10 +197,10 @@ $(TARGET_BIN): $(OUTDIR)/$(PROJECT).elf
 	@echo Extracting $@
 	$(Q) $(OBJCOPY) -O binary $< $@
 
-drop_copy: $(MBED_LIBRARY_SRC)
-	@echo Copy mbed library $^ to $(MBED_LIBRARY_TARGET)
-	$(Q) $(MKDIR) $(call convert-slash,$(dir $(MBED_LIBRARY_TARGET))) $(QUIET)
-	$(Q) copy $(call convert-slash,$(MBED_LIBRARY_SRC)) $(call convert-slash, $(MBED_LIBRARY_TARGET))
+# drop_copy: $(MBED_LIBRARY_SRC)
+# 	@echo Copy mbed library $^ to $(MBED_LIBRARY_TARGET)
+# 	$(Q) $(MKDIR) $(call convert-slash,$(dir $(MBED_LIBRARY_TARGET))) $(QUIET)
+# 	$(Q) copy $(call convert-slash,$(MBED_LIBRARY_SRC)) $(call convert-slash, $(MBED_LIBRARY_TARGET))
 
 $(OUTDIR)/$(PROJECT).hex: $(OUTDIR)/$(PROJECT).elf
 	@echo Extracting $@
