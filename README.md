@@ -2,8 +2,8 @@
 
 1. Multi-chip platform support using the latest mbed-os source code.
 2. Isolate the main code of Smoothieware from the hardware.
-3. Implement the function support for STM32F407
-4. Simplify the difficulty of chip transplantation
+3. Implement the function support for STM32F407.
+4. Simplify the code porting.
 
 # Current Progress #
 
