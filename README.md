@@ -8,6 +8,7 @@
 # Current Progress #
 
 1. 2019-01-17: Completed support for the latest mbed-os build environment.
+2. 2019-01-18: The first version that can be compiled.
 
 # Development support #
 

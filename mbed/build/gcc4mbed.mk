@@ -246,6 +246,8 @@ MBED_DEFINES  := -DMBED_CONF_RTOS_PRESENT=1 -DMBED_CONF_NSAPI_PRESENT=1
 endif
 MBED_LIBS     += $(MBED_LIB_NAME)
 
+# Yanminge for smoothieware
+MBED_DEFINES += -DUSE_FULL_LL_DRIVER
 
 # Only release builds disable asserts and enable RTOS sleeping via setting of NDEBUG macro.
 ifeq "$(GCC4MBED_TYPE)" "Release"
@@ -306,7 +308,7 @@ all_features = $(sort $(filter FEATURE_%,$(notdir $1)))
 unsupported_features = $(filter-out $2,$(call all_features,$1))
 unsupported_feature_dirs = $(filter $(addprefix %/,$(call unsupported_features,$1,$2)),$1)
 filter_features = $(patsubst %/,%,$(filter-out $(addsuffix /%,$(call unsupported_feature_dirs,$1,$2)),$(addsuffix /,$1)))
-unsupported_test_dirs = $(filter %/TESTS,$1)
+unsupported_test_dirs = $(filter %/TESTS  %TEST_APPS %UNITTESTS,$1)
 filter_out_tests = $(patsubst %/,%,$(filter-out $(addsuffix /%,$(call unsupported_test_dirs,$1)),$(addsuffix /,$1)))
 filter_dirs = $(call filter_toolchains,$(call filter_targets,$(call filter_features,$(call filter_out_tests,$1),$3),$2))
 remove_ignored_dirs = $(patsubst %/,%,$(filter-out $2,$(addsuffix /,$1)))

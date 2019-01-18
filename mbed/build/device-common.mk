@@ -97,7 +97,8 @@ else
 endif
 
 # List of the objects files to be compiled/assembled based on source files in SRC.
-MAIN_DIRS := $(call filter_dirs,$(RAW_MAIN_DIRS),$(TARGETS_FOR_DEVICE),$(FEATURES_FOR_DEVICE))
+DEVICE_MAIN_DIRS := $(call filter_dirs,$(RAW_MAIN_DIRS),$(TARGETS_FOR_DEVICE),$(FEATURES_FOR_DEVICE))
+MAIN_DIRS := $(call remove_ignored_dirs,$(DEVICE_MAIN_DIRS),$(MAIN_IGNORE))
 OBJECTS := $(call srcs2objs,$(MAIN_DIRS),$(SRC),$(OUTDIR))
 PAT_MATCH = $(foreach v,$(2),$(if $(findstring $(1),$(v)),$(v),))
 EXCL_OBJECTS := $(foreach e,$(EXCLUDE),$(call PAT_MATCH,$(e),$(OBJECTS)))
@@ -113,7 +114,7 @@ OBJECTS += $(DEVICE_OBJECTS)
 DEPFILES += $(patsubst %.o,%.d,$(OBJECTS))
 
 # Include path which points to subdirectories of this project, MRI, and user specified directory.
-INCLUDE_DIRS := $(patsubst %,-I%,$(INCDIRS) $(MAIN_DIRS) $(LIB_INCLUDES) $(GCC4MBED_DIR)/mri)
+INCLUDE_DIRS := $(patsubst %,-I%,$(INCDIRS) $(DEVICE_MAIN_DIRS) $(LIB_INCLUDES) $(GCC4MBED_DIR)/mri)
 
 # DEFINEs to be used when building main application's C/C++ code
 MAIN_DEFINES := $(DEFINES) -DMRI_ENABLE=$(DEVICE_MRI_ENABLE) -DMRI_INIT_PARAMETERS='"$(MRI_INIT_PARAMETERS)"'
