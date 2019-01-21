@@ -46,13 +46,11 @@
 // Debug
 #include "libs/SerialMessage.h"
 
-#ifndef NOUSBDEVICE
 #include "libs/USBDevice/USB.h"
 #include "libs/USBDevice/USBMSD/USBMSD.h"
 #include "libs/USBDevice/USBMSD/SDCard.h"
 #include "libs/USBDevice/USBSerial/USBSerial.h"
 #include "libs/USBDevice/DFU.h"
-#endif
 #include "libs/SDFAT.h"
 #include "StreamOutputPool.h"
 #include "ToolManager.h"
@@ -60,11 +58,6 @@
 #include "libs/Watchdog.h"
 
 #include "version.h"
-#ifdef __STM32F4__
-#include "system_stm32f4xx.h"
-#else
-#include "system_LPC17xx.h"
-#endif
 #include "platform_memory.h"
 
 #include "mbed.h"
@@ -208,6 +201,7 @@ void init() {
 #ifndef NO_UTILS_MOTORDRIVERCONTROL
     kernel->add_module( new MotorDriverControl(0) );
 #endif
+
 #ifndef DISABLEUSB
     // Create and initialize USB stuff
     u.init();
@@ -236,7 +230,7 @@ void init() {
     if(t > 0.1F) {
         // NOTE setting WDT_RESET with the current bootloader would leave it in DFU mode which would be suboptimal
         kernel->add_module( new Watchdog(t*1000000, WDT_MRI)); // WDT_RESET));
-        kernel->streams->printf("Watchdog enabled for %f seconds\n", t);
+        kernel->streams->printf("Watchdog enabled for %d seconds\n", (uint32_t)t);
     }else{
         kernel->streams->printf("WARNING Watchdog is disabled\n");
     }
@@ -293,12 +287,12 @@ int main()
     uint16_t cnt= 0;
     // Main loop
     while(1){
-#ifndef DISABLELEDS
+
         if(THEKERNEL->is_using_leds()) {
             // flash led 2 to show we are alive
-            leds[1]= (cnt++ & 0x1000) ? 1 : 0;
+            leds[1]= (cnt++ & 0x100) ? 1 : 0;
         }
-#endif
+        THEKERNEL->streams->printf("hello world! cnt(%d)\r\n",cnt);
         THEKERNEL->call_event(ON_MAIN_LOOP);
         THEKERNEL->call_event(ON_IDLE);
     }

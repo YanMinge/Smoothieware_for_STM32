@@ -13,8 +13,8 @@
 #define I2C_SDA PB_9
 #define I2C_SCK PB_8
 
-#define LED1    NC
-#define LED2    NC
+#define LED1    PF_9
+#define LED2    PF_10
 #define LED3    NC
 #define LED4    NC
 #define LED5    NC

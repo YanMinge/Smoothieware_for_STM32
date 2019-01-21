@@ -105,7 +105,12 @@ EXCL_OBJECTS := $(foreach e,$(EXCLUDE),$(call PAT_MATCH,$(e),$(OBJECTS)))
 OBJECTS := $(filter-out $(EXCL_OBJECTS),$(OBJECTS))
 
 # Add in the GCC4MBED stubs which allow hooking in the MRI debug monitor plus other GCC4MBED customization.
+ifeq "$(MBED_CUSTOM)" "1"
+OBJECTS += $(OUTDIR)/mbed_custom.o
+OBJECTS += $(OUTDIR)/configdefault.o
+else
 OBJECTS += $(OUTDIR)/gcc4mbed.o
+endif
 
 # Add in device specific object file(s).
 OBJECTS += $(DEVICE_OBJECTS)
@@ -119,6 +124,10 @@ INCLUDE_DIRS := $(patsubst %,-I%,$(INCDIRS) $(DEVICE_MAIN_DIRS) $(LIB_INCLUDES) 
 # DEFINEs to be used when building main application's C/C++ code
 MAIN_DEFINES := $(DEFINES) -DMRI_ENABLE=$(DEVICE_MRI_ENABLE) -DMRI_INIT_PARAMETERS='"$(MRI_INIT_PARAMETERS)"'
 MAIN_DEFINES += -DMRI_BREAK_ON_INIT=$(MRI_BREAK_ON_INIT) -DMRI_SEMIHOST_STDIO=$(MRI_SEMIHOST_STDIO)
+
+ifeq "$(MBED_CUSTOM)" "1"
+MAIN_DEFINES += -DWRITE_BUFFER_DISABLE=$(WRITE_BUFFER_DISABLE)  -DSTACK_SIZE=$(STACK_SIZE)
+endif
 
 # Libraries to be linked into final binary
 SYS_LIBS  := -lstdc++ -lsupc++ -lm -lgcc -lc -lgcc -lc -lnosys
@@ -242,6 +251,11 @@ $(OUTDIR)/gcc4mbed.o : $(GCC4MBED_DIR)/src/gcc4mbed.c $(firstword $(MAKEFILE_LIS
 	$(Q) $(MKDIR) $(call convert-slash,$(dir $@)) $(QUIET)
 	$(Q) $(GCC) $(C_FLAGS) $(MBED_INCLUDES) -c $< -o $@
 
+$(OUTDIR)/mbed_custom.o : $(GCC4MBED_DIR)/src/mbed_custom.cpp $(firstword $(MAKEFILE_LIST))
+	@echo Compiling $<
+	$(Q) $(MKDIR) $(call convert-slash,$(dir $@)) $(QUIET)
+	$(Q) $(GPP) $(CPP_FLAGS) $(MBED_INCLUDES) -c $< -o $@
+
 $(OUTDIR)/%.o : $(SRC)/%.cpp  $(firstword $(MAKEFILE_LIST))
 	@echo Compiling $<
 	$(Q) $(MKDIR) $(call convert-slash,$(dir $@)) $(QUIET)
@@ -261,6 +275,9 @@ $(OUTDIR)/%.o : $(SRC)/%.s  $(firstword $(MAKEFILE_LIST))
 	@echo Assembling $<
 	$(Q) $(MKDIR) $(call convert-slash,$(dir $@)) $(QUIET)
 	$(Q) $(GCC) $(ASM_FLAGS) $(MBED_INCLUDES) -c $< -o $@
+
+$(OUTDIR)/configdefault.o : config.default
+# $(Q) $(OBJCOPY) -I binary -O elf32-littlearm -B arm --readonly-text --rename-section .data=.rodata.configdefault $< $@
 
 
 ###############################################################################

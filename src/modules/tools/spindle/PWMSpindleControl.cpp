@@ -97,10 +97,12 @@ void PWMSpindleControl::on_module_loaded()
             feedback_pin = new mbed::InterruptIn(pinname);
             feedback_pin->rise(this, &PWMSpindleControl::on_pin_rise);
 #ifdef __STM32F4__
-            NVIC_SetPriority(EXTI3_IRQn, 16);
+        // Yanminge TODO
+        NVIC_SetPriority(EXTI3_IRQn, 16);
 #else
-            NVIC_SetPriority(EINT3_IRQn, 16);
+        NVIC_SetPriority(EINT3_IRQn, 16);
 #endif
+
         } else {
             THEKERNEL->streams->printf("Error: Spindle feedback pin has to be on P0 or P2.\n");
             delete this;

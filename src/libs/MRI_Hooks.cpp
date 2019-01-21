@@ -1,10 +1,5 @@
 #include "MRI_Hooks.h"
-
-#ifndef __STM32F4__
-#include <sLPC17xx.h>
-#else
 #include <mbed.h>
-#endif
 #include <mri.h>
 
 // This is used by MRI to turn pins on and off when entering and leaving MRI. Useful for not burning everything down

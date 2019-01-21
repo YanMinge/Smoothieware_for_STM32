@@ -43,6 +43,8 @@
 
 #include "mbed.h" // for wait_ms()
 
+extern unsigned int g_maximumHeapAddress;
+
 #include <malloc.h>
 #include <mri.h>
 #include <stdio.h>
@@ -591,10 +593,11 @@ void SimpleShell::mem_command( string parameters, StreamOutput *stream)
 {
     bool verbose = shift_parameter( parameters ).find_first_of("Vv") != string::npos;
     unsigned long heap = (unsigned long)_sbrk(0);
-    stream->printf("Heap Top: %lu bytes\r\n", heap);
+    unsigned long m = g_maximumHeapAddress - heap;
+    stream->printf("Unused Heap: %lu bytes\r\n", m);
 
     uint32_t f = heapWalk(stream, verbose);
-    stream->printf("heapWalk: %lu bytes\r\n", f);
+    stream->printf("Total Free RAM: %lu bytes\r\n", m + f);
 
     stream->printf("Free AHB0: %lu, AHB1: %lu\r\n", AHB0.free(), AHB1.free());
     if (verbose) {

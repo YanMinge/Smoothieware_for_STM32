@@ -5,10 +5,24 @@ GCC4MBED_DIR    := $(PROJECT_ROOT)/mbed
 NO_FLOAT_SCANF  := 1
 NO_FLOAT_PRINTF := 1
 MBED_SRC_ROOT   := $(GCC4MBED_DIR)/mbed-os
-BOARD           := PRNTR_V1
+BOARD           := PRNTR_V1_407
+MBED_CUSTOM     := 1
 
 MBED_OS_ENABLE := 0
-DEFAULT_SERIAL_BAUD_RATE ?= 9600
+DEFAULT_SERIAL_BAUD_RATE ?= 115200
+
+# Set to 1 to tag each heap allocation with the caller's return address.
+# NOTE: Can't be enabled with latest build as not compatible with newlib nano.
+HEAP_TAGS=0
+
+# Set to 1 configure MPU to disable write buffering and eliminate imprecise bus faults.
+WRITE_BUFFER_DISABLE=0
+
+# Set to non zero value if you want checks to be enabled which reserve a
+# specific amount of space for the stack.  The heap's growth will be
+# constrained to reserve this much space for the stack and the stack won't be
+# able to grow larger than this amount.
+STACK_SIZE=0x1000
 
 # Drivers that are not yet supported.
 export NONETWORK = 1

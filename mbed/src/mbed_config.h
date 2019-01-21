@@ -33,9 +33,9 @@
 #define CLOCK_SOURCE                                USE_PLL_HSE_XTAL|USE_PLL_HSI
 #define MBED_CONF_TARGET_LPUART_CLOCK_SOURCE        USE_LPUART_CLK_LSE|USE_LPUART_CLK_PCLK1 // set by target:FAMILY_STM32
 
-#define MBED_CONF_TARGET_STDIO_UART_TX  PA_9
-#define MBED_CONF_TARGET_STDIO_UART_RX  PA_10
-#define STDIO_UART     UART_1
+#define MBED_CONF_TARGET_STDIO_UART_TX              PA_9
+#define MBED_CONF_TARGET_STDIO_UART_RX              PA_10
+#define STDIO_UART                                  UART_1
 
 // Macros
 #define UNITY_INCLUDE_CONFIG_H                           // defined by library:utest

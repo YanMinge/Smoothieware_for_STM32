@@ -91,33 +91,33 @@ extruder.hotend1.z_offset                        0                # z offset fro
 #extruder.hotend1.retract_zlift_feedrate          6000            # zlift feedrate in mm/min (Note mm/min NOT mm/sec)
 
 # Stepper module pins ( ports, and pin numbers, appending "!" to the number will invert a pin )
-alpha_step_pin                                    a.4             # Pin for alpha stepper step signal
+alpha_step_pin                                    e.12            # Pin for alpha stepper step signal
 alpha_dir_pin                                     c.4             # Pin for alpha stepper direction
-alpha_en_pin                                      a.5             # Pin for alpha enable pin
+alpha_en_pin                                      c.1             # Pin for alpha enable pin
 
 beta_step_pin                                     c.5             # Pin for beta stepper step signal
-beta_dir_pin                                      b.12!           # Pin for beta stepper direction
-beta_en_pin                                       a.5             # Pin for beta enable
+beta_dir_pin                                      d.13!           # Pin for beta stepper direction
+beta_en_pin                                       c.1             # Pin for beta enable
 
 gamma_step_pin                                    b.13            # Pin for gamma stepper step signal
-gamma_dir_pin                                     b.15!           # Pin for gamma stepper direction
-gamma_en_pin                                      a.5             # Pin for gamma enable
+gamma_dir_pin                                     d.12!           # Pin for gamma stepper direction
+gamma_en_pin                                      c.1             # Pin for gamma enable
 
 extruder.hotend0.step_pin                         c.7             # Pin for extruder step signal
-extruder.hotend0.dir_pin                          c.8!            # Pin for extruder dir signal
-extruder.hotend0.en_pin                           a.5             # Pin for extruder enable signal
+extruder.hotend0.dir_pin                          d.14!           # Pin for extruder dir signal
+extruder.hotend0.en_pin                           c.1             # Pin for extruder enable signal
 
-extruder.hotend1.step_pin                         c.9             # Pin for extruder step signal
-extruder.hotend1.dir_pin                          a.9!            # Pin for extruder dir signal
-extruder.hotend1.en_pin                           a.5             # Pin for extruder enable signal
+extruder.hotend1.step_pin                         e.15            # Pin for extruder step signal
+extruder.hotend1.dir_pin                          b.0!            # Pin for extruder dir signal
+extruder.hotend1.en_pin                           c.1             # Pin for extruder enable signal
 
 ## Motor driver configuration
 motor_driver_control.alpha.enable                 true            # Enable motor driver module
 motor_driver_control.alpha.axis                   X               # Axis designator on which the motor driver is set 
 motor_driver_control.alpha.chip                   TMC2130         # Motor driver chip type
 motor_driver_control.alpha.spi_channel            0               # Set corresponding pins of the selected spi channel
-motor_driver_control.alpha.spi_cs_pin             a.10            # Set chip select pin
-motor_driver_control.alpha.current                800             # Motor currents in mA
+motor_driver_control.alpha.spi_cs_pin             d.9             # Set chip select pin
+motor_driver_control.alpha.current                600             # Motor currents in mA
 motor_driver_control.alpha.sense_resistor         150             # Sensing resistor value as a reference in milliohms
 motor_driver_control.alpha.microsteps             16              # Set microstepping value per step pulse. It can be 1, 2, 4, 8, 16, 32, 64, 128 or 256 microsteps
 motor_driver_control.alpha.chopper_mode           0               # 0 = stealthChop ; 1 = spreadCycle ; 2 = traditional constant off-time
@@ -126,8 +126,8 @@ motor_driver_control.beta.enable                  true            # Enable motor
 motor_driver_control.beta.axis                    Y               # Axis designator on which the motor driver is set 
 motor_driver_control.beta.chip                    TMC2130         # Motor driver chip type
 motor_driver_control.beta.spi_channel             0               # Set corresponding pins of the selected spi channel
-motor_driver_control.beta.spi_cs_pin              a.11            # Set chip select pin
-motor_driver_control.beta.current                 800             # Motor currents in mA
+motor_driver_control.beta.spi_cs_pin              d.10            # Set chip select pin
+motor_driver_control.beta.current                 400             # Motor currents in mA
 motor_driver_control.beta.sense_resistor          150             # Sensing resistor value as a reference in milliohms
 motor_driver_control.beta.microsteps              16              # Set microstepping value per step pulse. It can be 1, 2, 4, 8, 16, 32, 64, 128 or 256 microsteps
 motor_driver_control.beta.chopper_mode            0               # 0 = stealthChop ; 1 = spreadCycle ; 2 = traditional constant off-time
@@ -136,8 +136,8 @@ motor_driver_control.gamma.enable                 true            # Enable motor
 motor_driver_control.gamma.axis                   Z               # Axis designator on which the motor driver is set 
 motor_driver_control.gamma.chip                   TMC2130         # Motor driver chip type
 motor_driver_control.gamma.spi_channel            0               # Set corresponding pins of the selected spi channel
-motor_driver_control.gamma.spi_cs_pin             a.12            # Set chip select pin
-motor_driver_control.gamma.current                1000            # Motor currents in mA
+motor_driver_control.gamma.spi_cs_pin             d.11            # Set chip select pin
+motor_driver_control.gamma.current                400             # Motor currents in mA
 motor_driver_control.gamma.sense_resistor         150             # Sensing resistor value as a reference in milliohms
 motor_driver_control.gamma.microsteps             16              # Set microstepping value per step pulse. It can be 1, 2, 4, 8, 16, 32, 64, 128 or 256 microsteps
 motor_driver_control.gamma.chopper_mode           0               # 0 = stealthChop ; 1 = spreadCycle ; 2 = traditional constant off-time
@@ -146,8 +146,8 @@ motor_driver_control.delta.enable                 true            # Enable motor
 motor_driver_control.delta.axis                   A               # Axis designator on which the motor driver is set 
 motor_driver_control.delta.chip                   TMC2130         # Motor driver chip type
 motor_driver_control.delta.spi_channel            0               # Set corresponding pins of the selected spi channel
-motor_driver_control.delta.spi_cs_pin             b.8             # Set chip select pin
-motor_driver_control.delta.current                700             # Motor currents in mA
+motor_driver_control.delta.spi_cs_pin             b.1             # Set chip select pin
+motor_driver_control.delta.current                400             # Motor currents in mA
 motor_driver_control.delta.sense_resistor         150             # Sensing resistor value as a reference in milliohms
 motor_driver_control.delta.microsteps             16              # Set microstepping value per step pulse. It can be 1, 2, 4, 8, 16, 32, 64, 128 or 256 microsteps
 motor_driver_control.delta.chopper_mode           0               # 0 = stealthChop ; 1 = spreadCycle ; 2 = traditional constant off-time
@@ -156,8 +156,8 @@ motor_driver_control.epsilon.enable               true            # Enable motor
 motor_driver_control.epsilon.axis                 B               # Axis designator on which the motor driver is set 
 motor_driver_control.epsilon.chip                 TMC2130         # Motor driver chip type
 motor_driver_control.epsilon.spi_channel          0               # Set corresponding pins of the selected spi channel
-motor_driver_control.epsilon.spi_cs_pin           b.9             # Set chip select pin
-motor_driver_control.epsilon.current              700             # Motor currents in mA
+motor_driver_control.epsilon.spi_cs_pin           d.15            # Set chip select pin
+motor_driver_control.epsilon.current              400             # Motor currents in mA
 motor_driver_control.epsilon.sense_resistor       150             # Sensing resistor value as a reference in milliohms
 motor_driver_control.epsilon.microsteps           16              # Set microstepping value per step pulse. It can be 1, 2, 4, 8, 16, 32, 64, 128 or 256 microsteps
 motor_driver_control.epsilon.chopper_mode         0               # 0 = stealthChop ; 1 = spreadCycle ; 2 = traditional constant off-time
@@ -167,7 +167,7 @@ motor_driver_control.epsilon.chopper_mode         0               # 0 = stealthC
 # FANX_Cool mosfets. Select one or the other via jumpers on the board
 # Heater 0
 temperature_control.hotend0.enable                true            # Whether to activate this ( "hotend" ) module at all. All configuration is ignored if false.
-temperature_control.hotend0.heater_pin            a.6!            # Pin that controls the heater
+temperature_control.hotend0.heater_pin            b.6!            # Pin that controls the heater
 #temperature_control.hotend0.sensor                max6675
 #temperature_control.hotend0.chip_select_pin       c.6
 #temperature_control.hotend0.spi_channel           0               # SPI channel 0 or 1
@@ -188,9 +188,9 @@ temperature_control.hotend0.d_factor              159             #
 
 # Heater 1
 temperature_control.hotend1.enable                true            # Whether to activate this ( "hotend" ) module at all. All configuration is ignored if false.
-temperature_control.hotend1.heater_pin            a.7!            # Pin that controls the heater
+temperature_control.hotend1.heater_pin            b.7!            # Pin that controls the heater
 #temperature_control.hotend1.sensor                max31855
-#temperature_control.hotend1.chip_select_pin       a.8
+#temperature_control.hotend1.chip_select_pin       b.12
 #temperature_control.hotend1.spi_channel           0               # SPI channel 0 or 1
 #temperature_control.hotend1.readings_per_second   9               # 9 for max31855 and 4 for max6675
 temperature_control.hotend1.thermistor_pin        a.1             # Pin for the thermistor to read
@@ -209,8 +209,8 @@ temperature_control.hotend1.d_factor              143             #
 
 # Heater Bed
 temperature_control.bed.enable                    true            # Whether to activate this ( "hotend" ) module at all. All configuration is ignored if false.
-temperature_control.bed.thermistor_pin            c.0             # Pin for the thermistor to read
-temperature_control.bed.heater_pin                b.0!            # Pin that controls the heater
+temperature_control.bed.thermistor_pin            a.2             # Pin for the thermistor to read
+temperature_control.bed.heater_pin                b.11!           # Pin that controls the heater
 temperature_control.bed.thermistor                Semitec         # see http://smoothieware.org/temperaturecontrol#toc5
 #temperature_control.bed.beta                     4066            # or set the beta value
 
@@ -230,42 +230,42 @@ temperature_control.bed.d_factor                  527             #
 #switch.fan0_cool.enable                           true            #
 #switch.fan0_cool.input_on_command                 M106            #
 #switch.fan0_cool.input_off_command                M107            #
-#switch.fan0_cool.output_pin                       c.6             #
+#switch.fan0_cool.output_pin                       b.14            #
 #switch.fan0_cool.output_type                      hwpwm           #
 
 #switch.fan1_cool.enable                           true            #
 #switch.fan1_cool.input_on_command                 M106            #
 #switch.fan1_cool.input_off_command                M107            #
-#switch.fan1_cool.output_pin                       a.8             #
+#switch.fan1_cool.output_pin                       b.15            #
 #switch.fan1_cool.output_type                      hwpwm           #
 
 switch.fan0_part.enable                           true            #
 switch.fan0_part.input_on_command                 M106            #
 switch.fan0_part.input_off_command                M107            #
-switch.fan0_part.output_pin                       b.2             #
+switch.fan0_part.output_pin                       b.14            #
 switch.fan0_part.output_type                      hwpwm           #
 
 switch.fan1_part.enable                           true            #
 switch.fan1_part.input_on_command                 M106            #
 switch.fan1_part.input_off_command                M107            #
-switch.fan1_part.output_pin                       b.14            #
+switch.fan1_part.output_pin                       b.15            #
 switch.fan1_part.output_type                      hwpwm           #
 
 # Endstops
 endstops_enable                                   true            # the endstop module is enabled by default and can be disabled here
 #corexy_homing                                    false           # set to true if homing on a hbit or corexy
-alpha_min_endstop                                 c.10!           # add a ! to invert if endstop is NO connected to ground
-#alpha_max_endstop                                d.2!            #
+alpha_min_endstop                                 d.0!            # add a ! to invert if endstop is NO connected to ground
+#alpha_max_endstop                                d.4!            #
 alpha_homing_direction                            home_to_min     # or set to home_to_max and set alpha_max
 alpha_min                                         0               # this gets loaded after homing when home_to_min is set
 alpha_max                                         245             # this gets loaded after homing when home_to_max is set
-beta_min_endstop                                  c.11!           #
-#beta_max_endstop                                 b.4!            #
+beta_min_endstop                                  d.1!            #
+#beta_max_endstop                                 d.7!            #
 beta_homing_direction                             home_to_min     #
 beta_min                                          0               #
 beta_max                                          245             #
-gamma_min_endstop                                 c.12!           #
-#gamma_max_endstop                                b.5!            #
+gamma_min_endstop                                 d.3!            #
+#gamma_max_endstop                                d.8!            #
 gamma_homing_direction                            home_to_min     #
 gamma_min                                         0               #
 gamma_max                                         230             #
@@ -313,3 +313,8 @@ panel.gamma_jog_feedrate                     200               # Z jogging feedr
 
 panel.hotend_temperature                     185               # Temp to set hotend when preheat is selected
 panel.bed_temperature                        60                # Temp to set bed when preheat is selected
+
+watchdog_timeout                             10
+second_usb_serial_enable                     false
+dfu_enable                                   false
+msd_disable                                  true

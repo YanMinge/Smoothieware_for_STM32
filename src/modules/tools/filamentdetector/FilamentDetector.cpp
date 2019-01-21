@@ -79,6 +79,7 @@ void FilamentDetector::on_module_loaded()
         // set interrupt on rising edge
         this->encoder_pin->rise(this, &FilamentDetector::on_pin_rise);
 #ifdef __STM32F4__
+        // Yanminge TODO
         NVIC_SetPriority(EXTI3_IRQn, 16);
 #else
         NVIC_SetPriority(EINT3_IRQn, 16);
