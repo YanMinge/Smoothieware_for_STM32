@@ -13,11 +13,8 @@
 #include "ConfigValue.h"
 
 #include "max6675.h"
-
 #include "MRI_Hooks.h"
-#ifdef __STM32F4__
-#include "board_pins.h"
-#endif
+
 #define chip_select_checksum CHECKSUM("chip_select_pin")
 #define spi_channel_checksum CHECKSUM("spi_channel")
 

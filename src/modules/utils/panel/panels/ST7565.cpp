@@ -13,7 +13,6 @@
 #include "checksumm.h"
 #include "StreamOutputPool.h"
 #include "ConfigValue.h"
-#include "board_pins.h"
 
 //definitions for lcd
 #define LCDWIDTH 128

@@ -7,7 +7,7 @@
 
 # Current Progress #
 
-1. 2019-01-17: Completed support for the latest mbed-os build environment.
+1. 2019-01-17: Completed support for the latest mbed-os build environment(2019-01-10 merge id: 2454b25eba55b05b6adaf1258faf61e0818f51ae).
 2. 2019-01-18: The first version that can be compiled.
 2. 2019-01-21: Add simple support for STM32F407.
 

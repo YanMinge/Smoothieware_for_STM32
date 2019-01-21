@@ -39,7 +39,6 @@
 
 // for parse_pins in mbed
 #include "pinmap.h"
-#include "board_pins.h"
 
 #define panel_checksum             CHECKSUM("panel")
 #define enable_checksum            CHECKSUM("enable")

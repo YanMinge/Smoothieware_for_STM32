@@ -5,9 +5,6 @@
 #include <stdio.h>
 #include <string>
 
-#ifndef __STM32F4__
-#include "libs/LPC17xx/sLPC17xx.h" // smoothed mbed.h lib
-#endif
 #include "PinNames.h"
 
 namespace mbed {

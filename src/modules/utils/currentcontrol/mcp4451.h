@@ -8,13 +8,11 @@
 #include <string>
 #include <math.h>
 
-#include "board_pins.h"
-
 class MCP4451 : public DigipotBase {
     public:
         MCP4451(){
             // I2C com
-            this->i2c = new mbed::I2C(I2C_SDA, I2C_SCK);
+            this->i2c = new mbed::I2C(I2C_SDA, I2C_SCL);
             this->i2c->frequency(20000);
             for (int i = 0; i < 8; i++) currents[i] = -1;
         }

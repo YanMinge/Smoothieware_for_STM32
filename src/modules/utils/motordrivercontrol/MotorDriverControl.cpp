@@ -21,8 +21,6 @@
 
 #include <string>
 
-#include "board_pins.h"
-
 #define motor_driver_control_checksum  CHECKSUM("motor_driver_control")
 #define enable_checksum                CHECKSUM("enable")
 #define chip_checksum                  CHECKSUM("chip")

@@ -13,7 +13,6 @@
 #include "libs/Pin.h"
 #include "StreamOutputPool.h"
 #include "utils.h"
-#include "board_pins.h"
 
 // config settings
 #define panel_checksum             CHECKSUM("panel")

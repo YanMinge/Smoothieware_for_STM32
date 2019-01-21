@@ -61,7 +61,6 @@
 #include "platform_memory.h"
 
 #include "mbed.h"
-#include "board_pins.h"
 
 #define second_usb_serial_enable_checksum  CHECKSUM("second_usb_serial_enable")
 #define disable_msd_checksum  CHECKSUM("msd_disable")

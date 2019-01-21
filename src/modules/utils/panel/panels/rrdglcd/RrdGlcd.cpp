@@ -2,7 +2,6 @@
 
 #include "platform_memory.h"
 #include "StreamOutputPool.h"
-#include "board_pins.h"
 
 static const uint8_t font5x8[] = {
     // 5x8 font each byte is consecutive x bits left aligned then each subsequent byte is Y 8 bytes per character

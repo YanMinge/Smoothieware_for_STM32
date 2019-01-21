@@ -252,6 +252,9 @@ typedef enum {
     ADC_VREF = 0xF1,
     ADC_VBAT = 0xF2,
 
+    // Not connected
+    NC = (int)0xFFFFFFFF,
+
     // STDIO for console print
 #ifdef MBED_CONF_TARGET_STDIO_UART_TX
     STDIO_UART_TX = MBED_CONF_TARGET_STDIO_UART_TX,
@@ -281,6 +284,16 @@ typedef enum {
     USBRX       = STDIO_UART_RX,
     I2C_SCL     = PB_8, /* I2C1 */
     I2C_SDA     = PB_9,
+
+    SPI2_MOSI   = PC_3,
+    SPI2_MISO   = PC_2,
+    SPI2_SCK    = PB_10,
+    SDCARD_CS   = NC,
+
+    SPI1_MOSI   = PB_5,
+    SPI1_MISO   = PB_4,
+    SPI1_SCK    = PB_3,
+
     SPI_MOSI    = PA_7,
     SPI_MISO    = PA_6,
     SPI_SCK     = PA_5,
@@ -352,9 +365,6 @@ typedef enum {
     SYS_TRACED2 = PE_5,
     SYS_TRACED3 = PE_6,
     SYS_WKUP = PA_0,
-
-    // Not connected
-    NC = (int)0xFFFFFFFF
 } PinName;
 
 #ifdef __cplusplus
