@@ -89,7 +89,6 @@ USBMSD *msc= NULL;
 SDFAT mounter __attribute__ ((section ("AHBSRAM0"))) ("sd", &sd);
 #endif
 
-#ifndef DISABLELEDS
 DigitalOut leds[5] = {
     DigitalOut(LED1),
     DigitalOut(LED2),
@@ -97,16 +96,12 @@ DigitalOut leds[5] = {
     DigitalOut(LED4),
     DigitalOut(LED5)
 };
-#endif
 
 void init() {
-
-#ifndef DISABLELEDS
     // Default pins to low status
     for (size_t i = 0; i < sizeof(leds)/sizeof(leds[0]); i++){
         leds[i]= 0;
     }
-#endif
     Kernel* kernel = new Kernel();
 
     kernel->streams->printf("Smoothie Running @%ldMHz\r\n", SystemCoreClock / 1000000);
@@ -244,7 +239,6 @@ void init() {
     // clear up the config cache to save some memory
     kernel->config->config_cache_clear();
 
-#ifndef DISABLELEDS
     if(kernel->is_using_leds()) {
         // set some leds to indicate status... led0 init done, led1 mainloop running, led2 idle loop running, led3 sdcard ok
         leds[0]= 1; // indicate we are done with init
@@ -252,7 +246,6 @@ void init() {
         leds[3]= sdok?1:0; // 4th led indicates sdcard is available (TODO maye should indicate config was found)
 #endif
     }
-#endif
 
 #ifndef DISABLESD
     if(sdok) {
