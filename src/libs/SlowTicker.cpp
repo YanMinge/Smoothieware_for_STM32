@@ -54,7 +54,7 @@ void SlowTicker::start()
     NVIC_EnableIRQ(TIMER2_IRQn);    // Enable interrupt handler
 #else
     TIM6->DIER = TIM_DIER_UIE;      // update interrupt en
-    NVIC_EnableIRQ(TIM6_DAC_IRQn);      // Enable interrupt handler
+    NVIC_EnableIRQ(TIM6_DAC_IRQn);  // Enable interrupt handler
     TIM6->CR1 |= TIM_CR1_CEN;       // start
 #endif
 }

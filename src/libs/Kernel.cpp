@@ -152,6 +152,7 @@ Kernel::Kernel()
     NVIC_SetPriority(USB_IRQn, 5);
 #else
     NVIC_SetPriority(OTG_HS_IRQn, 5);
+    NVIC_SetPriority(OTG_FS_IRQn, 5);
 #endif
 #ifndef __STM32F4__
     // If MRI is enabled

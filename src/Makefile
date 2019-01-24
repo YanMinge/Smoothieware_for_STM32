@@ -27,9 +27,8 @@ STACK_SIZE=0x1000
 # Drivers that are not yet supported.
 export NONETWORK = 1
 export DISABLESD = 1
+export DISABLEMSD = 1
 export DISABLEUSB = 1
-export DISABLEMRI = 1
-export NOUSBDEVICE = 1
 
 DEFAULT_VERSION = 1.0.0.0
 

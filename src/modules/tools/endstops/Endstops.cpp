@@ -14,7 +14,6 @@
 #include "libs/nuts_bolts.h"
 #include "libs/Pin.h"
 #include "libs/StepperMotor.h"
-#include "wait_api.h" // mbed.h lib
 #include "Robot.h"
 #include "Config.h"
 #include "SlowTicker.h"
@@ -32,6 +31,8 @@
 
 #include <ctype.h>
 #include <algorithm>
+
+#include "mbed.h"
 
 // OLD deprecated syntax
 #define endstops_module_enable_checksum         CHECKSUM("endstops_enable")

@@ -25,7 +25,7 @@ ALL_DEFINES := -include $(MBED_CONFIG_H) $(GCC_DEFINES) $(MBED_DEFINES)
 # Flags to be used with C/C++ compiler that are shared between Debug and Release builds.
 C_FLAGS += -g3 -ffunction-sections -fdata-sections -fno-exceptions -fno-delete-null-pointer-checks -fomit-frame-pointer
 C_FLAGS += -funsigned-char
-C_FLAGS += -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wno-missing-braces
+C_FLAGS += -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wno-missing-braces #-Wvla -Wshift-negative-value
 C_FLAGS += $(ALL_DEFINES)
 C_FLAGS += $(DEP_FLAGS)
 
@@ -33,7 +33,8 @@ ifeq "$(NEWLIB_NANO)" "1"
 C_FLAGS += -specs=nano.specs
 endif
 
-CPP_FLAGS := $(C_FLAGS) -fno-rtti -std=gnu++11 -Wvla
+CPP_FLAGS := $(C_FLAGS) -fno-rtti -std=gnu++11
+
 C_FLAGS   += -std=gnu99
 
 # Flags used to assemble assembly languages sources.

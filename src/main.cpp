@@ -46,11 +46,9 @@
 // Debug
 #include "libs/SerialMessage.h"
 
-#include "libs/USBDevice/USB.h"
 #include "libs/USBDevice/USBMSD/USBMSD.h"
 #include "libs/USBDevice/USBMSD/SDCard.h"
 #include "libs/USBDevice/USBSerial/USBSerial.h"
-#include "libs/USBDevice/DFU.h"
 #include "libs/SDFAT.h"
 #include "StreamOutputPool.h"
 #include "ToolManager.h"
@@ -66,7 +64,6 @@
 #define disable_msd_checksum  CHECKSUM("msd_disable")
 #define dfu_enable_checksum  CHECKSUM("dfu_enable")
 #define watchdog_timeout_checksum  CHECKSUM("watchdog_timeout")
-
 
 #ifndef DISABLESD
 SDCard sd  __attribute__ ((section ("AHBSRAM0"))) (SPI2_MOSI, SPI2_MISO, SPI2_SCK, SDCARD_CS);      // this selects SPI1 as the sdcard as it is on Smoothieboard
@@ -115,8 +112,7 @@ void init() {
 #ifdef NONETWORK
     kernel->streams->printf("NETWORK is disabled\r\n");
 #endif
-
-#ifdef DISABLEMSD
+#if (defined(DISABLEMSD) && !defined(DISABLESD))
     // attempt to be able to disable msd in config
     if(sdok && !kernel->config->value( disable_msd_checksum )->by_default(true)->as_bool()){
         // HACK to zero the memory USBMSD uses as it and its objects seem to not initialize properly in the ctor
@@ -201,11 +197,11 @@ void init() {
     u.init();
 #endif
 #ifndef DISABLEUSB
-#ifdef DISABLEMSD
+#ifndef DISABLEMSD
     if(sdok && msc != NULL){
         kernel->add_module( msc );
     }
-#else
+#elif !defined(DISABLESD)
     kernel->add_module( &msc );
 #endif
 
@@ -224,7 +220,7 @@ void init() {
     if(t > 0.1F) {
         // NOTE setting WDT_RESET with the current bootloader would leave it in DFU mode which would be suboptimal
         kernel->add_module( new Watchdog(t*1000000, WDT_MRI)); // WDT_RESET));
-        kernel->streams->printf("Watchdog enabled for %d seconds\n", (uint32_t)t);
+        kernel->streams->printf("Watchdog enabled for %ld seconds\n", (uint32_t)t);
     }else{
         kernel->streams->printf("WARNING Watchdog is disabled\n");
     }
@@ -275,16 +271,22 @@ void init() {
 int main()
 {
     init();
-
+    int i = 0;
     uint16_t cnt= 0;
     // Main loop
+    USBSerial *serial = new USBSerial();
+	THEKERNEL->streams->append_stream(serial);
     while(1){
-
+		cnt = cnt + 1;
         if(THEKERNEL->is_using_leds()) {
             // flash led 2 to show we are alive
-            leds[1]= (cnt++ & 0x100) ? 1 : 0;
+            if(cnt > 0x3000)
+            {
+                leds[1]= !leds[1];
+				cnt = 0;
+		        THEKERNEL->streams->printf("I am a virtual serial port: %d\r\n", i++);
+            }
         }
-        THEKERNEL->streams->printf("hello world! cnt(%d)\r\n",cnt);
         THEKERNEL->call_event(ON_MAIN_LOOP);
         THEKERNEL->call_event(ON_IDLE);
     }

@@ -9,8 +9,6 @@
 #include "Gcode.h"
 #include "Module.h"
 #include "Kernel.h"
-#include "Timer.h" // mbed.h lib
-#include "wait_api.h" // mbed.h lib
 #include "Block.h"
 #include "Conveyor.h"
 #include "Planner.h"
