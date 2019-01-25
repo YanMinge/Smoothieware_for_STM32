@@ -20,14 +20,16 @@
 #define USBSERIAL_H
 
 #include "USBCDC.h"
-//#include "Stream.h"
-#include "CircBuffer.h"
-#include "Callback.h"
-
+/* Begin by Yanminge 2019-01-25 */
+#if SMOOTHIEWARE_FEATURE_ENABLE
 #include "Module.h"
 #include "StreamOutputPool.h"
-
-
+#else /* SMOOTHIEWARE_FEATURE_ENABLE */
+#include "Stream.h"
+#endif /* SMOOTHIEWARE_FEATURE_ENABLE */
+/* End by Yanminge 2019-01-25 */
+#include "CircBuffer.h"
+#include "Callback.h"
 /**
 * USBSerial example
 *
@@ -48,7 +50,13 @@
 * }
 * @endcode
 */
+/* Begin by Yanminge 2019-01-25 */
+#if SMOOTHIEWARE_FEATURE_ENABLE
 class USBSerial: public USBCDC, public Module, public StreamOutput {
+#else /* SMOOTHIEWARE_FEATURE_ENABLE */
+class USBSerial: public USBCDC, public Stream {
+#endif /* SMOOTHIEWARE_FEATURE_ENABLE */
+/* End by Yanminge 2019-01-25 */
 public:
 
     /**
@@ -72,7 +80,6 @@ public:
     * @returns true if there is no error, false otherwise
     */
     virtual int _putc(int c);
-    virtual int puts(const char *);
 
     /**
     * Read a character: blocking
@@ -80,6 +87,16 @@ public:
     * @returns character read
     */
     virtual int _getc();
+
+/* Begin by Yanminge 2019-01-25 */
+#if SMOOTHIEWARE_FEATURE_ENABLE
+    int puts(const char *);
+    void on_module_loaded(void);
+    void on_main_loop(void *);
+    void on_idle(void *);
+    void rx_callback(void);
+#endif /* SMOOTHIEWARE_FEATURE_ENABLE */
+/* End by Yanminge 2019-01-25 */
 
     /**
     * Check the number of bytes available.
@@ -152,9 +169,17 @@ public:
      *
      * @param cb Callback to attach
      */
+/* Begin by Yanminge 2019-01-25 */
+#if SMOOTHIEWARE_FEATURE_ENABLE
+    void attach(Callback<void()> cb) {
+        rx = cb;
+    }
+#else /* SMOOTHIEWARE_FEATURE_ENABLE */
     void attach(Callback<void()> &cb) {
         rx = cb;
     }
+#endif /* SMOOTHIEWARE_FEATURE_ENABLE */
+/* End by Yanminge 2019-01-25 */
 
     /**
      * Attach a callback to call when serial's settings are changed.
@@ -176,6 +201,14 @@ protected:
 private:
     Callback<void()> rx;
     CircBuffer<uint8_t,128> buf;
+/* Begin by Yanminge 2019-01-25 */
+#if SMOOTHIEWARE_FEATURE_ENABLE
+    volatile int  nl_in_rx;
+    volatile bool attached:1;
+    volatile bool halt_flag:1;
+    volatile bool query_flag:1;
+#endif /* SMOOTHIEWARE_FEATURE_ENABLE */
+/* End by Yanminge 2019-01-25 */
     void (*settingsChangedCallback)(int baud, int bits, int parity, int stop);
 };
 

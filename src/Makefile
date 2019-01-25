@@ -1,12 +1,11 @@
-PROJECT         := Blink
-DEVICES         := TEST_F407ZG
-PROJECT_ROOT    := ..
-GCC4MBED_DIR    := $(PROJECT_ROOT)/mbed
-NO_FLOAT_SCANF  := 1
-NO_FLOAT_PRINTF := 1
-MBED_SRC_ROOT   := $(GCC4MBED_DIR)/mbed-os
-BOARD           := PRNTR_V1_407
-MBED_CUSTOM     := 1
+PROJECT                          := smoothieware
+DEVICES                          := TEST_F407ZG
+PROJECT_ROOT                     := ..
+GCC4MBED_DIR                     := $(PROJECT_ROOT)/mbed
+NO_FLOAT_SCANF                   := 0
+NO_FLOAT_PRINTF                  := 0
+MBED_SRC_ROOT                    := $(GCC4MBED_DIR)/mbed-os
+SMOOTHIEWARE_FEATURE_ENABLE      := 1
 
 MBED_OS_ENABLE := 0
 DEFAULT_SERIAL_BAUD_RATE ?= 115200
@@ -48,7 +47,6 @@ $(info Version:   $(__GITVERSIONSTRING__))
 endif
 
 DEFINES += -D$(DEVICES)
-DEFINES += -D$(BOARD)
 DEFINES += -D__STM32F4__
 DEFINES += -D__GITVERSIONSTRING__=\"$(DEFAULT_VERSION)\"
 

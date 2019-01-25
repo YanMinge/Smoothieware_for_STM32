@@ -196,6 +196,7 @@ void init() {
     // Create and initialize USB stuff
     u.init();
 #endif
+    kernel->add_module( new(AHB0) USBSerial() );
 #ifndef DISABLEUSB
 #ifndef DISABLEMSD
     if(sdok && msc != NULL){
@@ -271,20 +272,16 @@ void init() {
 int main()
 {
     init();
-    int i = 0;
     uint16_t cnt= 0;
     // Main loop
-    USBSerial *serial = new USBSerial();
-	THEKERNEL->streams->append_stream(serial);
     while(1){
 		cnt = cnt + 1;
         if(THEKERNEL->is_using_leds()) {
             // flash led 2 to show we are alive
-            if(cnt > 0x3000)
+            if(cnt > 0x1000)
             {
                 leds[1]= !leds[1];
 				cnt = 0;
-		        THEKERNEL->streams->printf("I am a virtual serial port: %d\r\n", i++);
             }
         }
         THEKERNEL->call_event(ON_MAIN_LOOP);

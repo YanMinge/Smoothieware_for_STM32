@@ -19,9 +19,13 @@
 #include "stdint.h"
 #include "USBSerial.h"
 
+/* Begin by Yanminge 2019-01-25 */
+#if SMOOTHIEWARE_FEATURE_ENABLE
 #include "libs/Kernel.h"
 #include "libs/SerialMessage.h"
 #include "StreamOutputPool.h"
+#endif /* SMOOTHIEWARE_FEATURE_ENABLE */
+/* End by Yanminge 2019-01-25 */
 
 int USBSerial::_putc(int c) {
     if (!terminal_connected)
@@ -37,22 +41,26 @@ int USBSerial::_getc() {
     return c;
 }
 
+/* Begin by Yanminge 2019-01-25 */
+#if SMOOTHIEWARE_FEATURE_ENABLE
 int USBSerial::puts(const char *str) {
     if (!terminal_connected)
         return strlen(str);
     int i = 0;
 	while(*str)
     {
-      if(buf.isFull())
-      {
-        break;
-	  }
       send((uint8_t *)str,1);
 	  i++;
 	  str++;
 	}
 	return i;
 }
+
+void USBSerial::rx_callback(void){
+}
+
+#endif /* SMOOTHIEWARE_FEATURE_ENABLE */
+/* End by Yanminge 2019-01-25 */
 
 bool USBSerial::writeBlock(uint8_t * buf, uint16_t size) {
     if(size > MAX_PACKET_SIZE_EPBULK) {
@@ -64,8 +72,6 @@ bool USBSerial::writeBlock(uint8_t * buf, uint16_t size) {
     return true;
 }
 
-
-
 bool USBSerial::EPBULK_OUT_callback() {
     uint8_t c[65];
     uint32_t size = 0;
@@ -73,7 +79,44 @@ bool USBSerial::EPBULK_OUT_callback() {
     //we read the packet received and put it on the circular buffer
     readEP(c, &size);
     for (uint32_t i = 0; i < size; i++) {
+/* Begin by Yanminge 2019-01-25 */
+#if SMOOTHIEWARE_FEATURE_ENABLE
+        // handle backspace and delete by deleting the last character in the buffer if there is one
+        if(c[i] == 0x08 || c[i] == 0x7F) {
+            if(!buf.isEmpty()) buf.pop();
+            continue;
+        }
+
+        if(c[i] == 'X' - 'A' + 1) { // ^X
+            //THEKERNEL->set_feed_hold(false); // required to free stuff up
+            halt_flag = true;
+            continue;
+        }
+
+        if(c[i] == '?') { // ?
+            query_flag = true;
+            continue;
+        }
+
+        if(THEKERNEL->is_grbl_mode() || THEKERNEL->is_feed_hold_enabled()) {
+            if(c[i] == '!') { // safe pause
+                THEKERNEL->set_feed_hold(true);
+                continue;
+            }
+
+            if(c[i] == '~') { // safe resume
+                THEKERNEL->set_feed_hold(false);
+                continue;
+            }
+        }
         buf.queue(c[i]);
+		if (c[i] == '\n' || c[i] == '\r') {
+            nl_in_rx++;
+        }
+#else /* SMOOTHIEWARE_FEATURE_ENABLE */
+        buf.queue(c[i]);
+#endif /* SMOOTHIEWARE_FEATURE_ENABLE */
+/* End by Yanminge 2019-01-25 */
     }
 
     //call a potential handlenr
@@ -91,7 +134,19 @@ bool USBSerial::connected() {
     return terminal_connected;
 }
 
-#if 0
+/* Begin by Yanminge 2019-01-25 */
+#if SMOOTHIEWARE_FEATURE_ENABLE
+void USBSerial::on_module_loaded()
+{
+    this->register_for_event(ON_MAIN_LOOP);
+    this->register_for_event(ON_IDLE);
+	this->attach(callback(this, &USBSerial::rx_callback));
+    nl_in_rx = 0;
+    attached = false;
+    halt_flag = false;
+    query_flag = false;
+}
+
 void USBSerial::on_idle(void *argument)
 {
     if(halt_flag) {
@@ -102,7 +157,6 @@ void USBSerial::on_idle(void *argument)
         } else {
             puts("HALTED, M999 or $X to exit HALT state\r\n");
         }
-        rxbuf.flush(); // flush the recieve buffer, hopefully upstream has stopped sending
         nl_in_rx = 0;
     }
 
@@ -116,23 +170,22 @@ void USBSerial::on_idle(void *argument)
 void USBSerial::on_main_loop(void *argument)
 {
     // apparently some OSes don't assert DTR when a program opens the port
-    if (available() && !attach)
-        attach = true;
-
-    if (attach != attached) {
-        if (attach) {
-            attached = true;
+    if (connected() != attached)
+	{
+	    if(!connected())
+        {
+		    attached = false;
+			THEKERNEL->streams->printf("USB disconnect!\r\n");
+            THEKERNEL->streams->remove_stream(this);
+		    nl_in_rx = 0;
+        }
+	    else
+		{
+		    attached = true;
             THEKERNEL->streams->append_stream(this);
             puts("Smoothie\r\nok\r\n");
-        } else {
-            attached = false;
-            THEKERNEL->streams->remove_stream(this);
-            txbuf.flush();
-            rxbuf.flush();
-            nl_in_rx = 0;
-        }
+	    }
     }
-
     // if we are in feed hold we do not process anything
     //if(THEKERNEL->get_feed_hold()) return;
 
@@ -144,7 +197,6 @@ void USBSerial::on_main_loop(void *argument)
                 struct SerialMessage message;
                 message.message = received;
                 message.stream = this;
-                iprintf("USBSerial Received: %s\n", message.message.c_str());
                 THEKERNEL->call_event(ON_CONSOLE_LINE_RECEIVED, &message );
                 return;
             } else {
@@ -153,4 +205,5 @@ void USBSerial::on_main_loop(void *argument)
         }
     }
 }
-#endif
+#endif /* SMOOTHIEWARE_FEATURE_ENABLE */
+/* End by Yanminge 2019-01-25 */

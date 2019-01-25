@@ -14,13 +14,10 @@ void rx_callback(void)
 {
     if(!serial.connected())
     {
-        l2 = 0;
-        printf("serial not connected\r\n");
+        return;
     }
     else
     {
-        printf("serial connected\r\n");
-        l2 = 1;
         uint8_t read_bytes = serial.available();
         g_read_bytes = read_bytes;
         printf("read_bytes:(%d)\r\n",read_bytes);
@@ -28,7 +25,7 @@ void rx_callback(void)
         uint8_t i = 0;
         while(read_bytes)
         {
-        	uint8_t c = serial._getc();
+            uint8_t c = serial._getc();
             rx_table[i] = c;
             read_bytes--;
             i++;
@@ -36,11 +33,22 @@ void rx_callback(void)
     }
 }
 
-int main(void) {
+int main(void)
+{
     int i = 0;
     serial.attach(rx_callback);
     while(1)
     {
+        if(!serial.connected())
+        {
+            l2 = 1;
+            printf("serial not connected\r\n");
+        }
+        else
+        {
+            printf("serial connected\r\n");
+            l2 = 0;
+        }
         l1 = !l1;
         printf("Hello\r\n");
         serial.printf("I am a virtual serial port: %d\r\n", i++);

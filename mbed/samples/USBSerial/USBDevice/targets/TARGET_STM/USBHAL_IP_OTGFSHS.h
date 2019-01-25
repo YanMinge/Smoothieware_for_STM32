@@ -145,10 +145,14 @@ USBHAL::USBHAL(void)
     defined(TARGET_NUCLEO_F446ZE) || \
     defined(TARGET_NUCLEO_F767ZI) || \
     defined(TARGET_NUCLEO_F746ZG) || \
-    defined(TARGET_DISCO_F407VG)  || \
-    defined(TARGET_TEST_F407ZG)   || \
-    defined(TARGET_DISCO_F413ZH)  || \
-    defined(TARGET_DISCO_F469NI)  || \
+    defined(TARGET_DISCO_F407VG) || \
+/* Begin by Yanminge 2019-01-25 */
+#if SMOOTHIEWARE_FEATURE_ENABLE
+    defined(TARGET_TEST_F407ZG)  || \
+#endif /* SMOOTHIEWARE_FEATURE_ENABLE */
+/* End by Yanminge 2019-01-25 */
+    defined(TARGET_DISCO_F413ZH) || \
+    defined(TARGET_DISCO_F469NI) || \
     defined(TARGET_DISCO_F746NG_OTG_FS)
     __HAL_RCC_GPIOA_CLK_ENABLE();
     pin_function(PA_11, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_NOPULL, GPIO_AF10_OTG_FS)); // DM
