@@ -11,6 +11,7 @@
 2. 2019-01-18: The first version that can be compiled.
 3. 2019-01-21: Add simple support for STM32F407.
 4. 2019-01-24: Add USB serial device support.
+5. 2019-01-28: update mbed-os to commit id: daefce6bf496819b3a255357b3910cd1f2ae4bd0
 
 # Development support #
 

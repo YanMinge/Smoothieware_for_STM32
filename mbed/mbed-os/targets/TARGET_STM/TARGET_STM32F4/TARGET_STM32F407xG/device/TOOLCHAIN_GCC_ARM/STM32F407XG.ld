@@ -1,9 +1,5 @@
 /* Linker script to configure memory regions. */
 
-/*
- * Source: %mbedmicro%/libraries/mbed/targets/cmsis/TARGET_STM/TARGET_STM32F4/TARGET_STM32F407VG/TOOLCHAIN_GCC_ARM
- */
-
 MEMORY
 { 
   FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 1024K

@@ -63,7 +63,7 @@ void GcodeDispatch::on_console_line_received(void *line)
 
     // just reply ok to empty lines
     if(possible_command.empty()) {
-        new_message.stream->printf("ok\r\n");
+        //new_message.stream->printf("ok\r\n");
         return;
     }
 

@@ -7,7 +7,11 @@ MBED_IGNORE += $(MBED_SRC_ROOT)/features/frameworks/%
 MBED_IGNORE += $(MBED_SRC_ROOT)/events/equeue/tests/%
 MBED_IGNORE += $(MBED_SRC_ROOT)/features/unsupported/%
 MBED_IGNORE += $(MBED_SRC_ROOT)/features/nanostack/%
-MBED_IGNORE += $(MBED_SRC_ROOT)/components/storage/%
+MBED_IGNORE += $(MBED_SRC_ROOT)/components/storage/blockdevice/COMPONENT_DATAFLASH%
+MBED_IGNORE += $(MBED_SRC_ROOT)/components/storage/blockdevice/COMPONENT_FLASHIAP%
+MBED_IGNORE += $(MBED_SRC_ROOT)/components/storage/blockdevice/COMPONENT_QSPIF%
+MBED_IGNORE += $(MBED_SRC_ROOT)/components/storage/blockdevice/COMPONENT_RSPIF%
+MBED_IGNORE += $(MBED_SRC_ROOT)/components/storage/blockdevice/COMPONENT_SPIF%
 MBED_IGNORE += $(MBED_SRC_ROOT)/tools/%
 
 # Ignore a few more folders when building the single threaded mbed 2 library.

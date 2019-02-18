@@ -22,7 +22,6 @@
 
 #include "InterruptIn.h"   // mbed
 #include "us_ticker_api.h" // mbed
-#include "Callback.h"      // mbed
 
 #define extruder_checksum CHECKSUM("extruder")
 

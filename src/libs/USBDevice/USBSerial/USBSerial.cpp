@@ -38,6 +38,9 @@ int USBSerial::_getc() {
     uint8_t c = 0;
     while (buf.isEmpty());
     buf.dequeue(&c);
+    if (nl_in_rx > 0)
+        if (c == '\n' || c == '\r')
+            nl_in_rx--;
     return c;
 }
 

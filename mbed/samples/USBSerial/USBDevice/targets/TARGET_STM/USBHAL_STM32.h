@@ -30,11 +30,7 @@
     defined(TARGET_NUCLEO_F767ZI) || \
     defined(TARGET_NUCLEO_F746ZG) || \
     defined(TARGET_DISCO_F407VG) || \
-/* Begin by Yanminge 2019-01-25 */
-#if SMOOTHIEWARE_FEATURE_ENABLE
     defined(TARGET_TEST_F407ZG) || \
-#endif /* SMOOTHIEWARE_FEATURE_ENABLE */
-/* End by Yanminge 2019-01-25 */
     defined(TARGET_DISCO_F413ZH) || \
     defined(TARGET_DISCO_F429ZI) || \
     defined(TARGET_DISCO_F469NI) || \

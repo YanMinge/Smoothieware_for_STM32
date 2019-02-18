@@ -25,7 +25,6 @@ from tempfile import mkstemp
 from shutil import rmtree
 from distutils.version import LooseVersion
 
-from tools.targets import CORE_ARCH
 from tools.toolchains import mbedToolchain, TOOLCHAIN_PATHS
 from tools.hooks import hook_tool
 from tools.utils import mkdir, NotSupportedException, run_cmd
@@ -377,14 +376,6 @@ class ARMC6(ARM_STD):
         if target.core not in self.SUPPORTED_CORES:
             raise NotSupportedException(
                 "this compiler does not support the core %s" % target.core)
-        if CORE_ARCH[target.core] < 8:
-            self.notify.cc_info({
-                'severity': "Error", 'file': "", 'line': "", 'col': "",
-                'message': "ARMC6 does not support ARM architecture v{}"
-                " targets".format(CORE_ARCH[target.core]),
-                'text': '', 'target_name': self.target.name,
-                'toolchain_name': self.name
-            })
 
         if not set(("ARM", "ARMC6")).intersection(set(target.supported_toolchains)):
             raise NotSupportedException("ARM/ARMC6 compiler support is required for ARMC6 build")
@@ -453,12 +444,14 @@ class ARMC6(ARM_STD):
             "Cortex-M7F": "Cortex-M7.fp.sp",
             "Cortex-M7FD": "Cortex-M7.fp.dp",
             "Cortex-M23-NS": "Cortex-M23",
-            "Cortex-M33-NS": "Cortex-M33" }.get(target.core, target.core)
+            "Cortex-M33": "Cortex-M33.no_dsp.no_fp",
+            "Cortex-M33-NS": "Cortex-M33.no_dsp.no_fp",
+            "Cortex-M33F": "Cortex-M33.no_dsp",
+            "Cortex-M33F-NS": "Cortex-M33.no_dsp",
+            "Cortex-M33FD": "Cortex-M33",
+            "Cortex-M33FD-NS": "Cortex-M33"}.get(target.core, target.core)
 
-        if target.core.startswith("Cortex-M33"):
-            self.flags['asm'].append("--cpu=Cortex-M33.no_dsp.no_fp")
-        else :
-            self.flags['asm'].append("--cpu=%s" % asm_cpu)
+        self.flags['asm'].append("--cpu=%s" % asm_cpu)
 
         self.cc = ([join(TOOLCHAIN_PATHS["ARMC6"], "armclang")] +
                    self.flags['common'] + self.flags['c'])
