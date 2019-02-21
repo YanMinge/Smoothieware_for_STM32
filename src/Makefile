@@ -6,9 +6,8 @@ NO_FLOAT_SCANF                   := 0
 NO_FLOAT_PRINTF                  := 0
 MBED_SRC_ROOT                    := $(GCC4MBED_DIR)/mbed-os
 SMOOTHIEWARE_FEATURE_ENABLE      := 1
-
-MBED_OS_ENABLE := 0
-DEFAULT_SERIAL_BAUD_RATE ?= 115200
+MBED_OS_ENABLE                   := 0
+DEFAULT_SERIAL_BAUD_RATE         ?= 115200
 
 # Set to 1 to tag each heap allocation with the caller's return address.
 # NOTE: Can't be enabled with latest build as not compatible with newlib nano.
@@ -101,8 +100,9 @@ DEFINES += -DN_PRIMARY_AXIS=$(PAXIS)
 endif
 
 # add mbed-os patch
-include ./main-ignore.mk
+include ./add-mbed-os-patch.mk
 
 # Ignore some unsupported modules
-include ./add-mbed-os-patch.mk
+include ./main-ignore.mk
+
 include $(GCC4MBED_DIR)/build/gcc4mbed.mk

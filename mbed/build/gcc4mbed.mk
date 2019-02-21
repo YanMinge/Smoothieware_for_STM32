@@ -538,8 +538,8 @@ RAW_MAIN_DIRS := $(call recurse_dir,$(SRC))
 
 
 # Rules for building all of the desired device targets
-.PHONY: all clean clean-libs clean-mbed clean-all deploy help
-all: $(DEVICES)
+.PHONY: all clean clean-libs clean-mbed clean-all deploy copy help
+all: $(DEVICES) $(MBED_OS_PATCHED_FLAG)
 clean: $(addsuffix -clean,$(DEVICES))
 clean-libs:
 	$(foreach i,$(patsubst !%,%,$(USER_LIBS)),$(call clean_user_lib,$i))

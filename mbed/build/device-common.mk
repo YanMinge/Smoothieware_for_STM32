@@ -190,7 +190,7 @@ endif
 
 .PHONY: $(MBED_DEVICE) $(MBED_DEVICE)-clean $(MBED_DEVICE)-deploy $(MBED_DEVICE)-size # drop_copy
 
-$(MBED_DEVICE): $(TARGET_BIN) $(OUTDIR)/$(PROJECT).hex $(OUTDIR)/$(PROJECT).disasm $(MBED_DEVICE)-size # drop_copy
+$(MBED_DEVICE): $(MBED_OS_PATCH_PATH)/mbed-os-patched $(TARGET_BIN) $(OUTDIR)/$(PROJECT).hex $(OUTDIR)/$(PROJECT).disasm $(MBED_DEVICE)-size # drop_copy
 
 # mbed library locations depend on build type.
 ifeq "$(GCC4MBED_TYPE)" "Debug"
@@ -278,7 +278,7 @@ $(OUTDIR)/%.o : $(SRC)/%.s  $(firstword $(MAKEFILE_LIST))
 	$(Q) $(MKDIR) $(call convert-slash,$(dir $@)) $(QUIET)
 	$(Q) $(GCC) $(ASM_FLAGS) $(MBED_INCLUDES) -c $< -o $@
 
-$(OUTDIR)/configdefault.o : config.default
+$(OUTDIR)/configdefault.o : config.default $(MBED_OS_PATCH_PATH)/mbed-os-patched
 # $(Q) $(OBJCOPY) -I binary -O elf32-littlearm -B arm --readonly-text --rename-section .data=.rodata.configdefault $< $@
 
 
