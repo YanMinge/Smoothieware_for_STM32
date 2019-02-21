@@ -30,7 +30,9 @@
     defined(TARGET_NUCLEO_F767ZI) || \
     defined(TARGET_NUCLEO_F746ZG) || \
     defined(TARGET_DISCO_F407VG) || \
+/* Begin by Yanminge 2019-02-21 */
     defined(TARGET_TEST_F407ZG) || \
+/* End by Yanminge 2019-02-21 */
     defined(TARGET_DISCO_F413ZH) || \
     defined(TARGET_DISCO_F429ZI) || \
     defined(TARGET_DISCO_F469NI) || \
