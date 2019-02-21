@@ -14,8 +14,7 @@
 5. 2019-02-21: Use submodule to manage mbed-os code
 
 # Installation and compilation instructions #
-1. Clone code with `git clone https://github.com/YanMinge/Smoothieware_for_STM32`
-2. Update submodule with `git submodule update --init`
+1. Clone code with `git clone --recursive https://github.com/YanMinge/Smoothieware_for_STM32`
 3. Use win_install.cmd or linux_install to install Compiler Environment
 5. Enter the directory `Smoothieware_for_STM32\src` from the terminal BuildShell.cmd or BuildShell
 6. Enter `make` to Compiled code
