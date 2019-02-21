@@ -1,4 +1,3 @@
 [submodule "mbed/mbed-os"]
 	path = mbed/mbed-os
-	url = https://github.com/ARMmbed/mbed-oshttps://github.com/ARMmbed/mbed-os
-	branch = master
+	url = https://github.com/ARMmbed/mbed-os
