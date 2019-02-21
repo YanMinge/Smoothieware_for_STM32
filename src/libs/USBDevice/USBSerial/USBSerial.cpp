@@ -38,9 +38,11 @@ int USBSerial::_getc() {
     uint8_t c = 0;
     while (buf.isEmpty());
     buf.dequeue(&c);
+#if SMOOTHIEWARE_FEATURE_ENABLE
     if (nl_in_rx > 0)
         if (c == '\n' || c == '\r')
             nl_in_rx--;
+#endif /* SMOOTHIEWARE_FEATURE_ENABLE */
     return c;
 }
 

@@ -100,7 +100,9 @@ ifneq "$(PAXIS)" ""
 DEFINES += -DN_PRIMARY_AXIS=$(PAXIS)
 endif
 
-# set to not compile in any network support
+# add mbed-os patch
 include ./main-ignore.mk
 
+# Ignore some unsupported modules
+include ./add-mbed-os-patch.mk
 include $(GCC4MBED_DIR)/build/gcc4mbed.mk
