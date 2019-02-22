@@ -18,6 +18,7 @@
 #ifndef USBHAL_STM32_H
 #define USBHAL_STM32_H
 
+/* Begin by Yanminge 2019-02-21 */
 #if defined(TARGET_NUCLEO_F207ZG) || \
     defined(TARGET_NUCLEO_F401RE) || \
     defined(TARGET_STEVAL_3DP001V1) || \
@@ -30,9 +31,7 @@
     defined(TARGET_NUCLEO_F767ZI) || \
     defined(TARGET_NUCLEO_F746ZG) || \
     defined(TARGET_DISCO_F407VG) || \
-/* Begin by Yanminge 2019-02-21 */
-    defined(TARGET_TEST_F407ZG) || \
-/* End by Yanminge 2019-02-21 */
+    defined(TARGET_TEST_F407ZG)  || \
     defined(TARGET_DISCO_F413ZH) || \
     defined(TARGET_DISCO_F429ZI) || \
     defined(TARGET_DISCO_F469NI) || \
@@ -41,6 +40,7 @@
     defined(TARGET_DISCO_L475VG_IOT01A) || \
     defined(TARGET_DISCO_L476VG)
 #include "USBHAL_IP_OTGFSHS.h"
+/* End by Yanminge 2019-02-21 */
 
 #elif defined(TARGET_NUCLEO_F103RB) || \
       defined(TARGET_NUCLEO_F303ZE) || \

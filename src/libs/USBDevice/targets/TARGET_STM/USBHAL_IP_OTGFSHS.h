@@ -26,9 +26,10 @@
 #endif
 #endif
 
+
+/* Begin by Yanminge 2019-02-21 */
 #if defined(TARGET_DISCO_F429ZI) || \
     defined(TARGET_DISCO_F769NI) || \
-/* Begin by Yanminge 2019-02-21 */
     defined(TARGET_DISCO_F746NG_OTG_HS) || \
     defined(TARGET_TEST_F407ZG)
 /* End by Yanminge 2019-02-21 */
