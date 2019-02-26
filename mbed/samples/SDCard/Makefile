@@ -19,8 +19,6 @@ NO_FLOAT_SCANF  := 1
 NO_FLOAT_PRINTF := 1
 MBED_SRC_ROOT   := $(GCC4MBED_DIR)/mbed-os
 
-DEFINES += -D__STM32F4__
-
 # This program is so simple, it doesn't need any RTOS functionality.
 MBED_OS_ENABLE := 0
 
