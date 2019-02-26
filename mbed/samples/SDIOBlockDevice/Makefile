@@ -11,13 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-PROJECT                          := Blink
-DEVICES                          ?= TEST_F407ZG
-PROJECT_ROOT                     := ../../../
-GCC4MBED_DIR                     := ../..
-NO_FLOAT_SCANF                   := 1
-NO_FLOAT_PRINTF                  := 1
-MBED_SRC_ROOT                    := $(GCC4MBED_DIR)/mbed-os
+PROJECT         := SDIOBlockDevice
+DEVICES         ?= TEST_F407ZG
+PROJECT_ROOT    := ../../../
+GCC4MBED_DIR    := ../..
+NO_FLOAT_SCANF  := 1
+NO_FLOAT_PRINTF := 1
+MBED_SRC_ROOT   := $(GCC4MBED_DIR)/mbed-os
 
 # This program is so simple, it doesn't need any RTOS functionality.
 MBED_OS_ENABLE := 0

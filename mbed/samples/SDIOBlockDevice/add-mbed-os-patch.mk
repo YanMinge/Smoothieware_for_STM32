@@ -61,6 +61,7 @@ else
 	$(COPY) $(call convert-slash, $(MBED_OS_PATCH_PATH)/after/targets/TARGET_STM/TARGET_STM32F4/sdio_device.h) $(call convert-slash, $(MBED_OS_PATH)/targets/TARGET_STM/TARGET_STM32F4)
 	$(COPYDIR) $(call convert-slash, $(MBED_OS_PATCH_PATH)/after/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F407xG/TARGET_TEST_F407ZG/*.*) $(call convert-slash, $(MBED_OS_PATH)/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F407xG/TARGET_TEST_F407ZG)
 	$(MKFILE) $(call convert-slash, $(MBED_OS_PATCHED_FLAG))
+
 endif
 
 clean: clean_mbed_os_patch

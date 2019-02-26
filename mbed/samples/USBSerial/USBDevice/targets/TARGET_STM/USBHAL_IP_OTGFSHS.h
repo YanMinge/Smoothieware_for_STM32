@@ -26,9 +26,13 @@
 #endif
 #endif
 
+
+/* Begin by Yanminge 2019-02-21 */
 #if defined(TARGET_DISCO_F429ZI) || \
     defined(TARGET_DISCO_F769NI) || \
-    defined(TARGET_DISCO_F746NG_OTG_HS)
+    defined(TARGET_DISCO_F746NG_OTG_HS) || \
+    defined(TARGET_TEST_F407ZG)
+/* End by Yanminge 2019-02-21 */
 #define USBHAL_IRQn  OTG_HS_IRQn
 #else
 #define USBHAL_IRQn  OTG_FS_IRQn
@@ -100,7 +104,10 @@ USBHAL::USBHAL(void)
     hpcd.Init.phy_itface = PCD_PHY_ULPI;
     hpcd.Init.Sof_enable = 0;
     hpcd.Init.speed = PCD_SPEED_HIGH;
-#elif defined(TARGET_DISCO_F429ZI)
+/* Begin by Yanminge 2019-02-21 */
+#elif defined(TARGET_DISCO_F429ZI) || \
+    defined(TARGET_TEST_F407ZG)
+/* End by Yanminge 2019-02-21 */
     hpcd.Instance = USB_OTG_HS;
     hpcd.Init.phy_itface = PCD_PHY_EMBEDDED;
     hpcd.Init.Sof_enable = 0;
@@ -146,7 +153,6 @@ USBHAL::USBHAL(void)
     defined(TARGET_NUCLEO_F767ZI) || \
     defined(TARGET_NUCLEO_F746ZG) || \
     defined(TARGET_DISCO_F407VG) || \
-    defined(TARGET_TEST_F407ZG)  || \
     defined(TARGET_DISCO_F413ZH) || \
     defined(TARGET_DISCO_F469NI) || \
     defined(TARGET_DISCO_F746NG_OTG_FS)
@@ -157,6 +163,14 @@ USBHAL::USBHAL(void)
     pin_function(PA_10, STM_PIN_DATA(STM_MODE_AF_OD, GPIO_PULLUP, GPIO_AF10_OTG_FS)); // ID
     pin_function(PA_8, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_NOPULL, GPIO_AF10_OTG_FS));  // SOF
     __HAL_RCC_USB_OTG_FS_CLK_ENABLE();
+
+/* Begin by Yanminge 2019-02-21 */
+#elif defined(TARGET_TEST_F407ZG)
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    pin_function(PB_14, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_NOPULL, GPIO_AF12_OTG_HS_FS)); // DM
+    pin_function(PB_15, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_NOPULL, GPIO_AF12_OTG_HS_FS)); // DP
+    __HAL_RCC_USB_OTG_HS_CLK_ENABLE();
+/* End by Yanminge 2019-02-21 */
 
 #elif defined(TARGET_DISCO_F429ZI)
     __HAL_RCC_GPIOB_CLK_ENABLE();

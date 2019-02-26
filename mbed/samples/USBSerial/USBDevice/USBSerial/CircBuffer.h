@@ -40,6 +40,27 @@ public:
         write %= size;
     }
 
+/* Begin by Yanminge 2019-01-25 */
+#if SMOOTHIEWARE_FEATURE_ENABLE
+    // pop last entered character
+    void pop() {
+        if(!isEmpty()) {
+            write--;
+            write %= size;
+        }
+    }
+
+    void flush() {
+        read = write;
+    }
+
+    uint16_t free() {
+        return size - available() - 1;
+    };
+
+#endif /* SMOOTHIEWARE_FEATURE_ENABLE */
+/* End by Yanminge 2019-01-25 */
+
     uint16_t available() {
         return (write >= read) ? write - read : size - read + write;
     };

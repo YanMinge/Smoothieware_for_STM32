@@ -11,7 +11,8 @@
 2. 2019-01-18: The first version that can be compiled.
 3. 2019-01-21: Add simple support for STM32F407.
 4. 2019-01-24: Add USB serial device support.
-5. 2019-02-21: Use submodule to manage mbed-os code
+5. 2019-02-21: Use submodule to manage mbed-os code.
+6. 2019-02-26: Add SDIO SD card support.
 
 # Installation and compilation instructions #
 1. Clone code with `git clone --recursive https://github.com/YanMinge/Smoothieware_for_STM32`
@@ -19,6 +20,7 @@
 5. Enter the directory `Smoothieware_for_STM32\src` from the terminal BuildShell.cmd or BuildShell
 6. Enter `make` to Compiled code
 7. When compiling for the first time, If there is a mbed-os patch file, the patch operation will be performed first, so you needs to be executed `make` again.
+8. If your hardware is different from what I use, You can test your code using sample code first. reference `Smoothieware_for_STM32\mbed\samples`
 
 # Development support #
 

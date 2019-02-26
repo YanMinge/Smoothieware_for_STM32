@@ -22,4 +22,7 @@ MBED_SRC_ROOT   := $(GCC4MBED_DIR)/mbed-os
 # This program is so simple, it doesn't need any RTOS functionality.
 MBED_OS_ENABLE := 0
 
+# add mbed-os patch
+include ./add-mbed-os-patch.mk
+
 include $(GCC4MBED_DIR)/build/gcc4mbed.mk

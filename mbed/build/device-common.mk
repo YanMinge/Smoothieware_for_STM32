@@ -190,7 +190,11 @@ endif
 
 .PHONY: $(MBED_DEVICE) $(MBED_DEVICE)-clean $(MBED_DEVICE)-deploy $(MBED_DEVICE)-size # drop_copy
 
+ifeq "$(MBED_OS_PATH_ENABLE)" "1"
 $(MBED_DEVICE): $(MBED_OS_PATCH_PATH)/mbed-os-patched $(TARGET_BIN) $(OUTDIR)/$(PROJECT).hex $(OUTDIR)/$(PROJECT).disasm $(MBED_DEVICE)-size # drop_copy
+else
+$(MBED_DEVICE): $(TARGET_BIN) $(OUTDIR)/$(PROJECT).hex $(OUTDIR)/$(PROJECT).disasm $(MBED_DEVICE)-size # drop_copy
+endif
 
 # mbed library locations depend on build type.
 ifeq "$(GCC4MBED_TYPE)" "Debug"
