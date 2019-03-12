@@ -151,7 +151,7 @@ void HAL_SD_MspInit(SD_HandleTypeDef *hsd) {
         hdma_sdio_rx.Init.MemBurst = DMA_MBURST_INC4;
         hdma_sdio_rx.Init.PeriphBurst = DMA_PBURST_INC4;
         if (HAL_DMA_Init(&hdma_sdio_rx) != HAL_OK) {
-            error("SDIO DMA Init error at %d in %s", __FILE__, __LINE__);
+            error("SDIO DMA Init error at %s in %d", __FILE__, __LINE__);
         }
 
         __HAL_LINKDMA(hsd, hdmarx, hdma_sdio_rx);
@@ -178,7 +178,7 @@ void HAL_SD_MspInit(SD_HandleTypeDef *hsd) {
         hdma_sdio_tx.Init.MemBurst = DMA_MBURST_INC4;
         hdma_sdio_tx.Init.PeriphBurst = DMA_PBURST_INC4;
         if (HAL_DMA_Init(&hdma_sdio_tx) != HAL_OK) {
-            error("SDIO DMA Init error at %d in %s", __FILE__, __LINE__);
+            error("SDIO DMA Init error at %s in %d", __FILE__, __LINE__);
         }
 
         __HAL_LINKDMA(hsd, hdmatx, hdma_sdio_tx);
@@ -272,7 +272,7 @@ uint8_t SD_Init(void) {
     hsd.Init.ClockPowerSave = SDIO_CLOCK_POWER_SAVE_DISABLE;
     hsd.Init.BusWide = SDIO_BUS_WIDE_1B;
     hsd.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
-    hsd.Init.ClockDiv = 0;
+    hsd.Init.ClockDiv = 4;
     // !!! clock must be slower in polling mode if compiled w/o optimization !!!
 
     /* HAL SD initialization */

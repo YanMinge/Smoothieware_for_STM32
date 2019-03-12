@@ -57,11 +57,11 @@ ifeq ($(MBED_OS_PATCHED_FLAG), $(wildcard $(MBED_OS_PATCHED_FLAG)))
 else
 	@echo  mbed-os patch has not been copied
 	$(COPY) $(call convert-slash, $(MBED_OS_PATCH_PATH)/after/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F407xG/device/TOOLCHAIN_GCC_ARM/STM32F407XG.ld) $(call convert-slash, $(MBED_OS_PATH)/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F407xG/device/TOOLCHAIN_GCC_ARM/STM32F407XG.ld)
+	$(COPY) $(call convert-slash, $(MBED_OS_PATCH_PATH)/after/targets/TARGET_STM/TARGET_STM32F4/device/stm32f4xx_hal_pcd.c) $(call convert-slash, $(MBED_OS_PATH)/targets/TARGET_STM/TARGET_STM32F4/device/stm32f4xx_hal_pcd.c)
 	$(COPY) $(call convert-slash, $(MBED_OS_PATCH_PATH)/after/targets/TARGET_STM/TARGET_STM32F4/sdio_device.c) $(call convert-slash, $(MBED_OS_PATH)/targets/TARGET_STM/TARGET_STM32F4)
 	$(COPY) $(call convert-slash, $(MBED_OS_PATCH_PATH)/after/targets/TARGET_STM/TARGET_STM32F4/sdio_device.h) $(call convert-slash, $(MBED_OS_PATH)/targets/TARGET_STM/TARGET_STM32F4)
 	$(COPYDIR) $(call convert-slash, $(MBED_OS_PATCH_PATH)/after/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F407xG/TARGET_TEST_F407ZG/*.*) $(call convert-slash, $(MBED_OS_PATH)/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F407xG/TARGET_TEST_F407ZG)
 	$(MKFILE) $(call convert-slash, $(MBED_OS_PATCHED_FLAG))
-
 endif
 
 clean: clean_mbed_os_patch
@@ -73,6 +73,7 @@ ifeq ($(MBED_OS_PATCHED_FLAG), $(wildcard $(MBED_OS_PATCHED_FLAG)))
 	$(REMOVE) $(call convert-slash, $(MBED_OS_PATH)/targets/TARGET_STM/TARGET_STM32F4/sdio_device.c)
 	$(REMOVE) $(call convert-slash, $(MBED_OS_PATH)/targets/TARGET_STM/TARGET_STM32F4/sdio_device.h)
 	$(COPY) $(call convert-slash, $(MBED_OS_PATCH_PATH)/before/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F407xG/device/TOOLCHAIN_GCC_ARM/STM32F407XG.ld) $(call convert-slash, $(MBED_OS_PATH)/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F407xG/device/TOOLCHAIN_GCC_ARM/STM32F407XG.ld)
+	$(COPY) $(call convert-slash, $(MBED_OS_PATCH_PATH)/before/targets/TARGET_STM/TARGET_STM32F4/device/stm32f4xx_hal_pcd.c) $(call convert-slash, $(MBED_OS_PATH)/targets/TARGET_STM/TARGET_STM32F4/device/stm32f4xx_hal_pcd.c)
 	$(REMOVE_DIR) $(call convert-slash, $(MBED_OS_PATH)/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F407xG/TARGET_TEST_F407ZG)
 	$(REMOVE) $(call convert-slash, $(MBED_OS_PATCHED_FLAG))
 else

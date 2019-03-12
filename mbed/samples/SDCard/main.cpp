@@ -4,7 +4,7 @@
 #include "File.h"
 #include <stdlib.h>
 
-// Test block device
+// Test block device size
 #define TEST_SIZE 20
 
 SDIOBlockDevice sdiobd(PC_13);
@@ -13,7 +13,7 @@ extern serial_t stdio_uart;
 
 int main() {
 	FATFileSystem::format(&sdiobd);
-    serial_init(&stdio_uart, SERIAL_TX, SERIAL_RX);  //重定向到 Serial1，也可以重定向到 Serial2
+    serial_init(&stdio_uart, SERIAL_TX, SERIAL_RX);  //Redirect printf to serial1
 
     printf("sdio block device init\r\n");
     FATFileSystem fs("fat");
@@ -22,16 +22,16 @@ int main() {
     err = fs.mkdir("test_read_dir/test_dir", S_IRWXU | S_IRWXG | S_IRWXO);
 
     uint8_t *buffer = new (std::nothrow) uint8_t[TEST_SIZE];
-    // Fill with random sequence
-    srand(1);
+
+    // Fill with data
     for (int i = 0; i < TEST_SIZE; i++) {
-        buffer[i] = 0xff & rand();
+        buffer[i] = 0x30+i;                          //0123456789:;<=>?@ABC
     }
 
     File file;
     err = file.open(&fs, "test_read_write.dat", O_WRONLY | O_CREAT);
     ssize_t size = file.write(buffer, TEST_SIZE);
-    printf("write sd card!\r\n");
+    printf("write sd card(%d)!\r\n", err);
     err = file.close();
 
     err = file.open(&fs, "test_read_write.dat", O_RDONLY);
@@ -40,7 +40,7 @@ int main() {
     }
     size = file.read(buffer, TEST_SIZE);
     err = file.close();
-    printf("read sd card, size = %d\r\n",size);
+    printf("read sd card(%d), size = %d\r\n", err, size);
     for (int i = 0; i < size; i++) {
         printf("%c", buffer[i]);
     }

@@ -1,8 +1,10 @@
 #include "mbed.h"
 #include "USBSerial.h"
+#include <stdlib.h>
 
 //Virtual serial port over USB
 USBSerial serial;
+extern serial_t stdio_uart; 
 
 DigitalOut l1(LED1);
 DigitalOut l2(LED2);
@@ -36,6 +38,7 @@ void rx_callback(void)
 int main(void)
 {
     int i = 0;
+    serial_init(&stdio_uart, SERIAL_TX, SERIAL_RX);  //Redirect printf to serial1
     serial.attach(rx_callback);
     while(1)
     {

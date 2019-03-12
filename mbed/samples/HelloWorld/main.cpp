@@ -9,6 +9,7 @@ DigitalOut led2(LED2);
 
 int main() {
     pc.baud(115200);
+    pc.printf("Hello world!\r\n");
     while(1) {
         led1 = 1;
         led2 = 1;

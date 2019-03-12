@@ -89,23 +89,26 @@ SDIOBlockDevice::~SDIOBlockDevice() {
 
 int SDIOBlockDevice::init() {
 
-    debug_if(SD_DBG, "--- Mbed OS sdioblockDevice example ---\n");
+    debug_if(SD_DBG, "--- Mbed OS sdioblockDevice ---\n");
     debug_if(SD_DBG, "init Card...\r\n");
     if (isPresent() == false) {
+    	debug_if(SD_DBG, "SD_BLOCK_DEVICE_ERROR_NO_DEVICE\r\n");
         return SD_BLOCK_DEVICE_ERROR_NO_DEVICE;
     }
 
     if (!_is_initialized) {
         _sd_state = SD_Init();
-        if (BD_ERROR_OK != _sd_state)
+        if (BD_ERROR_OK != _sd_state){
+    	    debug_if(SD_DBG, "BD_ERROR_DEVICE_ERROR\r\n");
             return BD_ERROR_DEVICE_ERROR;
+        }
 
         SD_GetCardInfo(&_cardInfo);
         _is_initialized = true;
-        debug_if(SD_DBG, "SD initialized: type: %d  version: %d  class: %d\n",
+        debug_if(SD_DBG, "SD initialized: type: %lu  version: %lu  class: %lu\n",
                  _cardInfo.CardType, _cardInfo.CardVersion, _cardInfo.Class);
-        debug_if(SD_DBG, "SD size: %d MB\n",
-                 _cardInfo.LogBlockNbr / 2 / 1024);
+        debug_if(SD_DBG, "SD size: %lu MB\n",
+                 (uint32_t)(_cardInfo.LogBlockNbr / 2 / 1024));
     }
 
     // get sectors count from cardinfo
@@ -157,12 +160,9 @@ int SDIOBlockDevice::read(void* b, bd_addr_t addr, bd_size_t size) {
 #else
 #   error "TRANSFER_MODE must be either TRANSFER_MODE_POLLING or TRANSFER_MODE_DMA"
 #endif
-    debug_if(SD_DBG, "ReadBlocks dbgtest addr: %lld  blockCnt: %lld \n", addr, blockCnt);
     if (_sd_state != 0) {
-        debug_if(SD_DBG, "ReadBlocks failed! addr: %lld  blockCnt: %lld \n", addr, blockCnt);
+        debug_if(SD_DBG, "ReadBlocks failed! addr: %lu  blockCnt: %lu \n", (uint32_t)addr, (uint32_t)blockCnt);
         debug_if(SD_DBG, "  hsd.errorcode: %lu  0x%lx\n", hsd.ErrorCode, hsd.ErrorCode);
-        printf("ReadBlocks failed! addr: %lld  blockCnt: %lld \n", addr, blockCnt);
-        printf("  hsd.errorcode: %lu  0x%lx\n", hsd.ErrorCode, hsd.ErrorCode);
         status = SD_BLOCK_DEVICE_ERROR_READBLOCKS;
     }
     else {
@@ -175,6 +175,7 @@ int SDIOBlockDevice::read(void* b, bd_addr_t addr, bd_size_t size) {
 #if (TRANSFER_MODE == TRANSFER_MODE_DMA)
     while (SD_DMA_ReadPending() != SD_TRANSFER_OK) {
         // wait until DMA transfer done
+        debug_if(SD_DBG, "SD_DMA_ReadPending\n");
         wait_ms(10);
     }
 #endif
@@ -214,12 +215,9 @@ int SDIOBlockDevice::program(const void* b, bd_addr_t addr, bd_size_t size) {
 #else
 #   error "TRANSFER_MODE must be either TRANSFER_MODE_POLLING or TRANSFER_MODE_DMA"
 #endif
-    debug_if(SD_DBG, "WriteBlocks dbgtest addr: %lld  blockCnt: %lld \n", addr, blockCnt);
     if (_sd_state != 0) {
-        debug_if(SD_DBG, "WriteBlocks failed! addr: %lld  blockCnt: %lld \n", addr, blockCnt);
+        debug_if(SD_DBG, "WriteBlocks failed! addr: %lu  blockCnt: %lu \n", (uint32_t)addr, (uint32_t)blockCnt);
         debug_if(SD_DBG, "  hsd.errorcode: %lu  0x%lx\n", hsd.ErrorCode, hsd.ErrorCode);
-        printf("ReadBlocks failed! addr: %lld  blockCnt: %lld \n", addr, blockCnt);
-        printf("  hsd.errorcode: %lu  0x%lx\n", hsd.ErrorCode, hsd.ErrorCode);
         status = SD_BLOCK_DEVICE_ERROR_WRITEBLOCKS;
     }
     else {
