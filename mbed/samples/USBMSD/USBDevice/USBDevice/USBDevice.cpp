@@ -658,6 +658,7 @@ void USBDevice::busReset(void)
     device.state = DEFAULT;
     device.configuration = 0;
     device.suspended = false;
+
     /* Call class / vendor specific busReset function */
     USBCallback_busReset();
 }
@@ -849,6 +850,7 @@ bool USBDevice::write(uint8_t endpoint, uint8_t * buffer, uint32_t size, uint32_
 bool USBDevice::writeNB(uint8_t endpoint, uint8_t * buffer, uint32_t size, uint32_t maxSize)
 {
     EP_STATUS result;
+
     if (size > maxSize)
     {
         return false;
@@ -867,6 +869,7 @@ bool USBDevice::writeNB(uint8_t endpoint, uint8_t * buffer, uint32_t size, uint3
     }
 
     result = endpointWriteResult(endpoint);
+
     return (result == EP_COMPLETED);
 }
 

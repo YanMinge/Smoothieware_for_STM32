@@ -279,7 +279,7 @@ void USBMSD::memoryVerify (uint8_t * buf, uint16_t size) {
 
 
 bool USBMSD::inquiryRequest (void) {
-    uint8_t inquiry[] = { 0x00, 0x80, 0x00, 0x01,
+    static uint8_t inquiry[] = { 0x00, 0x80, 0x00, 0x01,
                           36 - 4, 0x80, 0x00, 0x00,
                           'M', 'B', 'E', 'D', '.', 'O', 'R', 'G',
                           'M', 'B', 'E', 'D', ' ', 'U', 'S', 'B', ' ', 'D', 'I', 'S', 'K', ' ', ' ', ' ',
@@ -293,7 +293,7 @@ bool USBMSD::inquiryRequest (void) {
 
 
 bool USBMSD::readFormatCapacity() {
-    uint8_t capacity[] = { 0x00, 0x00, 0x00, 0x08,
+    static uint8_t capacity[] = { 0x00, 0x00, 0x00, 0x08,
                            (uint8_t)((BlockCount >> 24) & 0xff),
                            (uint8_t)((BlockCount >> 16) & 0xff),
                            (uint8_t)((BlockCount >> 8) & 0xff),
@@ -312,7 +312,7 @@ bool USBMSD::readFormatCapacity() {
 
 
 bool USBMSD::readCapacity (void) {
-    uint8_t capacity[] = {
+    static uint8_t capacity[] = {
         (uint8_t)(((BlockCount - 1) >> 24) & 0xff),
         (uint8_t)(((BlockCount - 1) >> 16) & 0xff),
         (uint8_t)(((BlockCount - 1) >> 8) & 0xff),
@@ -347,7 +347,7 @@ bool USBMSD::write (uint8_t * buf, uint16_t size) {
 
 
 bool USBMSD::modeSense6 (void) {
-    uint8_t sense6[] = { 0x03, 0x00, 0x00, 0x00 };
+    static uint8_t sense6[] = { 0x03, 0x00, 0x00, 0x00 };
     if (!write(sense6, sizeof(sense6))) {
         return false;
     }
@@ -355,13 +355,13 @@ bool USBMSD::modeSense6 (void) {
 }
 
 void USBMSD::sendCSW() {
+    stage = WAIT_CSW; 
     csw.Signature = CSW_Signature;
     writeNB(EPBULK_IN, (uint8_t *)&csw, sizeof(CSW), MAX_PACKET_SIZE_EPBULK);
-    stage = WAIT_CSW;
 }
 
 bool USBMSD::requestSense (void) {
-    uint8_t request_sense[] = {
+    static uint8_t request_sense[] = {
         0x70,
         0x00,
         0x05,   // Sense Key: illegal request

@@ -94,14 +94,14 @@ USBHAL::USBHAL(void)
 
     // Unmask global interrupts
     USB_OTG_REGS->GREGS.GINTMSK |= USB_OTG_GINTMSK_SOFM |    // Start of frame mask
-                             USB_OTG_GINTMSK_RXFLVLM |       // Receive FIFO nonempty mask 
-                             USB_OTG_GINTMSK_USBRST;         // USB reset mask
+                             USB_OTG_GINTMSK_RXFLVLM | // Receive FIFO nonempty mask 
+                             USB_OTG_GINTMSK_USBRST;   // USB reset mask
 
     USB_OTG_REGS->DREGS.DCFG |= USB_OTG_DCFG_DSPD |          // Full speed
-                          USB_OTG_DCFG_NZLSOHSK;             // Non-zero-length status OUT handshake
+                          USB_OTG_DCFG_NZLSOHSK;       // Non-zero-length status OUT handshake
 
     USB_OTG_REGS->GREGS.GCCFG |= USB_OTG_GCCFG_NOVBUSSENS |  // Disable VBUS sensing
-                           USB_OTG_GCCFG_PWRDWN;             // Power down
+                           USB_OTG_GCCFG_PWRDWN;       // Power down
 
     instance = this;
     NVIC_SetVector(USBHAL_IRQn, (uint32_t)&_usbisr);
@@ -164,7 +164,7 @@ bool USBHAL::realiseEndpoint(uint8_t endpoint, uint32_t maxPacket,
     }
 
     // Generic in or out EP controls
-    uint32_t control = (maxPacket << 0) |       // Packet size
+    uint32_t control = (maxPacket << 0) | // Packet size
                        USB_OTG_DIEPCTL_USBAEP | // Active endpoint
                        type << USB_OTG_DIEPCTL_EPTYP_Pos;   // Endpoint type
 
@@ -184,7 +184,7 @@ bool USBHAL::realiseEndpoint(uint8_t endpoint, uint32_t maxPacket,
             control |= USB_OTG_DIEPCTL_SD0PID_SEVNFRM; // SD0PID
         }
 
-        control |= (epIndex << 22) |     // TxFIFO index
+        control |= (epIndex << 22) | // TxFIFO index
                    USB_OTG_DIEPCTL_SNAK; // SNAK
         USB_OTG_REGS->INEP_REGS[epIndex].DIEPCTL = control;
 
@@ -249,7 +249,7 @@ void USBHAL::EP0stall(void)
 EP_STATUS USBHAL::endpointRead(uint8_t endpoint, uint32_t maximumSize)
 {
     uint32_t epIndex = endpoint >> 1;
-    uint32_t size = (1 << 19) |         // 1 packet
+    uint32_t size = (1 << 19) | // 1 packet
                     (maximumSize << 0); // Packet size
 //    if (endpoint == EP0OUT) {
     epComplete &= ~(1 << endpoint);
@@ -288,7 +288,7 @@ EP_STATUS USBHAL::endpointWrite(uint8_t endpoint, uint8_t *data, uint32_t size)
     USB_OTG_REGS->DREGS.DIEPEMPMSK = (1 << epIndex);
     epComplete &= ~(1 << endpoint);
     while ((USB_OTG_REGS->INEP_REGS[epIndex].DTXFSTS & 0XFFFF) < ((size + 3) >> 2));
-   
+
     for (uint32_t i = 0; i < (size + 3) >> 2; i++, data += 4) {
         USB_OTG_REGS->FIFO[epIndex][0] = *(uint32_t *)data;
     }
@@ -298,7 +298,6 @@ EP_STATUS USBHAL::endpointWrite(uint8_t endpoint, uint8_t *data, uint32_t size)
 
 EP_STATUS USBHAL::endpointWriteResult(uint8_t endpoint)
 {
-    //printf("WriteResult(0x%x)\r\n",epComplete);
     if (epComplete & (1 << endpoint)) {
         epComplete &= ~(1 << endpoint);
         return EP_COMPLETED;
@@ -355,7 +354,6 @@ void USBHAL::usbisr(void)
         USB_OTG_REGS->OUTEP_REGS[2].DOEPCTL |= USB_OTG_DOEPCTL_SNAK;
         USB_OTG_REGS->OUTEP_REGS[3].DOEPCTL |= USB_OTG_DOEPCTL_SNAK;
 
-        //Transfer completed interrupt mask
         USB_OTG_REGS->DREGS.DIEPMSK = USB_OTG_DIEPMSK_XFRCM;
 
         bufferEnd = 0;
@@ -365,7 +363,6 @@ void USBHAL::usbisr(void)
         bufferEnd += rxFifoSize >> 2;
 
         busReset();
-
         // Create the endpoints, and wait for setup packets on out EP0
         realiseEndpoint(EP0IN, MAX_PACKET_SIZE_EP0, 0);
         realiseEndpoint(EP0OUT, MAX_PACKET_SIZE_EP0, 0);
@@ -436,12 +433,11 @@ void USBHAL::usbisr(void)
                 // If the transfer is complete
                 if (USB_OTG_REGS->INEP_REGS[i].DIEPINT & USB_OTG_DIEPINT_XFRC) { // Tx Complete
                     if (i != 0){
-                        epComplete |= (1 << (1 + (i << 1)));
+                    epComplete |= (1 << (1 + (i << 1)));
                         if((instance->*(epCallback[(1 + (i << 1)) - 2]))()){
 
                         }
                     }
-                    // Clear the interrupt
                     USB_OTG_REGS->INEP_REGS[i].DIEPINT = USB_OTG_DIEPINT_XFRC;
                 }
             }

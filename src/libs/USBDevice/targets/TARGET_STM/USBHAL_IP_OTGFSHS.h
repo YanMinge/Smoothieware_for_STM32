@@ -26,7 +26,6 @@
 #endif
 #endif
 
-
 /* Begin by Yanminge 2019-02-21 */
 #if defined(TARGET_DISCO_F429ZI) || \
     defined(TARGET_DISCO_F769NI) || \
@@ -107,11 +106,12 @@ USBHAL::USBHAL(void)
 /* Begin by Yanminge 2019-02-21 */
 #elif defined(TARGET_DISCO_F429ZI) || \
     defined(TARGET_TEST_F407ZG)
-/* End by Yanminge 2019-02-21 */
     hpcd.Instance = USB_OTG_HS;
     hpcd.Init.phy_itface = PCD_PHY_EMBEDDED;
+    hpcd.Init.dma_enable = 0;
     hpcd.Init.Sof_enable = 0;
-    hpcd.Init.speed = PCD_SPEED_HIGH;
+    hpcd.Init.speed = PCD_SPEED_FULL;
+/* End by Yanminge 2019-02-21 */
 #else
     hpcd.Instance = USB_OTG_FS;
     hpcd.Init.phy_itface = PCD_PHY_EMBEDDED;

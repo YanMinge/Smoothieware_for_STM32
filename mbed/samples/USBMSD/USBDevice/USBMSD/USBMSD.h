@@ -80,7 +80,6 @@ public:
     */
     void disconnect();
 
-
     /**
     * Destructor
     */
@@ -175,7 +174,6 @@ protected:
     * Callback called to process class specific requests
     */
     virtual bool USBCallback_request();
-
 
 
 private:
